@@ -6,7 +6,7 @@ namespace CM79D3_HFT_2023241.Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //comment
         }
     }
 }
