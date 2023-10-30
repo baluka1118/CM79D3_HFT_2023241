@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +20,11 @@ namespace CM79D3_HFT_2023241.Models
         public string Location { get; set; }
         [StringLength(100)]
         public string ContactEmail { get; set; }
-        //ide még kapcsolatok
+        [NotMapped]
+        public virtual ICollection<Firefighter> Firefighters { get; set; }
+        public FireStation()
+        {
+            Firefighters = new HashSet<Firefighter>();
+        }
     }
 }

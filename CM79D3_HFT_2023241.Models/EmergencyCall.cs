@@ -18,7 +18,7 @@ namespace CM79D3_HFT_2023241.Models
         FalseAlarm,
         Other
     }
-    class EmergencyCall
+    public class EmergencyCall
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -33,6 +33,12 @@ namespace CM79D3_HFT_2023241.Models
         public IncidentType IncidentType { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
-        //ide még kapcsolatok
+
+        [NotMapped]
+        public virtual ICollection<Firefighter> Firefighters { get; set; }
+        public EmergencyCall()
+        {
+            Firefighters = new HashSet<Firefighter>();
+        }
     }
 }

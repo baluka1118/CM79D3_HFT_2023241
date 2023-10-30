@@ -11,7 +11,7 @@ namespace CM79D3_HFT_2023241.Models
     /// <summary>
     /// Defines a firefighter working at a fire station.
     /// </summary>
-    class Firefighter
+    public class Firefighter
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,7 +24,18 @@ namespace CM79D3_HFT_2023241.Models
         public string Rank { get; set; }
         [Required,StringLength(50)]
         public string ContactInformation { get; set; }
-        //ide még kapcsolatok
-
+        [ForeignKey(nameof(FireStation))]
+        public int FireStation_ID { get; set; }
+        [NotMapped]
+        public virtual FireStation FireStation { get; set; }
+        [NotMapped]
+        public virtual ICollection<Equipment> Equipment { get; set; }
+        [NotMapped]
+        public virtual ICollection<EmergencyCall> EmergencyCalls { get; set; }
+        public Firefighter()
+        {
+            Equipment = new HashSet<Equipment>();
+            EmergencyCalls = new HashSet<EmergencyCall>();
+        }
     }
 }

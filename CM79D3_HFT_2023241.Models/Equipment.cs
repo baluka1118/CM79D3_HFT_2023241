@@ -17,7 +17,7 @@ namespace CM79D3_HFT_2023241.Models
         OutOfService
     }
 
-    class Equipment
+    public class Equipment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -26,7 +26,11 @@ namespace CM79D3_HFT_2023241.Models
         public string Type { get; set; }
         [Required]
         public EquipmentCondition Condition { get; set; }
-        //ide még kapcsolatok
-
+        [NotMapped]
+        public virtual ICollection<Firefighter> Firefighters { get; set;}
+        public Equipment()
+        {
+            Firefighters = new HashSet<Firefighter>();
+        }
     }
 }
