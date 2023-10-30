@@ -8,22 +8,24 @@ using System.Threading.Tasks;
 
 namespace CM79D3_HFT_2023241.Models
 {
-    /// <summary>
-    /// Defines a firefighter working at a fire station.
-    /// </summary>
-    class Firefighter
+    public enum EquipmentCondition
+    {
+        New,
+        Good,
+        Fair,
+        Poor,
+        OutOfService
+    }
+
+    class Equipment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required,StringLength(50)]
-        public string FirstName { get; set; }
-        [Required,StringLength(50)]
-        public string LastName { get; set; }
-        [StringLength(30)]
-        public string Rank { get; set; }
-        [Required,StringLength(50)]
-        public string ContactInformation { get; set; }
+        public string Type { get; set; }
+        [Required]
+        public EquipmentCondition Condition { get; set; }
         //ide még kapcsolatok
 
     }

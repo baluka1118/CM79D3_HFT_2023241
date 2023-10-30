@@ -12,8 +12,7 @@ namespace CM79D3_HFT_2023241.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        [StringLength(100)]
+        [Required, StringLength(100)]
         public string Name { get; set; }
         [Required]
         public string Location { get; set; }
