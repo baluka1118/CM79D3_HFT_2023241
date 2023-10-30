@@ -25,7 +25,7 @@ namespace CM79D3_HFT_2023241.Models
         public int Id { get; set; }
         [Required, StringLength(50)]
         public string CallerName { get; set; }
-        [Required, StringLength(50)]
+        [StringLength(50)]
         public string CallerPhone { get; set;}
         [Required, StringLength(50)]
         public string IncidentLocation { get; set; }

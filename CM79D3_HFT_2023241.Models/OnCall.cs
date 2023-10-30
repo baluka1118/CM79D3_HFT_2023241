@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CM79D3_HFT_2023241.Models
 {
-    class OnCall
+    public class OnCall
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

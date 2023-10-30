@@ -19,7 +19,7 @@ namespace CM79D3_HFT_2023241.Models
         [Required]
         public string Location { get; set; }
         [StringLength(100)]
-        public string ContactEmail { get; set; }
+        public string ContactInformation { get; set; }
         [NotMapped]
         public virtual ICollection<Firefighter> Firefighters { get; set; }
         public FireStation()
