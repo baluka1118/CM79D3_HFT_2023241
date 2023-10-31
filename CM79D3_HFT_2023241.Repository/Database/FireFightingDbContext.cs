@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CM79D3_HFT_2023241.Repository
+namespace CM79D3_HFT_2023241.Repository.Database
 {
     public class FireFightingDbContext : DbContext
     {
@@ -18,18 +18,15 @@ namespace CM79D3_HFT_2023241.Repository
         public virtual DbSet<OnCall> OnCall { get; set; }
         public FireFightingDbContext()
         {
-            this.Database.EnsureCreated();
+            Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!builder.IsConfigured)
             {
-                string conn = @"Data Source=(LocalDB)\MSSQLLocalDB;
-                AttachDbFilename=|DataDirectory|\TemporaryDatabase.mdf;Integrated Security=True;MultipleActiveResultSets=true";
                 builder
-                .UseSqlServer(conn)
-                .UseLazyLoadingProxies();
-                //.UseInMemoryDatabase("DATABASE");
+                .UseLazyLoadingProxies()
+                .UseInMemoryDatabase("firefighting");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
