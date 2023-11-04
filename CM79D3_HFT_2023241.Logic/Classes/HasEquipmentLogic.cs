@@ -25,7 +25,12 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public HasEquipment Read(int id)
         {
-            return this.repo.Read(id);
+            var he = repo.Read(id);
+            if (he == null)
+            {
+                throw new ArgumentException($"HasEquipment doesn't exists. ({id})");
+            }
+            return he;
         }
 
         public IQueryable<HasEquipment> ReadAll()

@@ -27,7 +27,12 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         }
         public FireStation Read(int id)
         {
-            return repo.Read(id);
+            var station = repo.Read(id);
+            if (station == null)
+            {
+                throw new ArgumentException($"Fire Station doesn't exists. ({id})");
+            }
+            return station;
         }
 
         public IQueryable<FireStation> ReadAll()
@@ -38,6 +43,15 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public void Update(FireStation item)
         {
             repo.Update(item);
+        }
+        /// <summary>
+        /// Returns how many firefighters there are in the fire station with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int? HowManyFirefighters(int id)
+        {
+            return this.repo.Read(id).Firefighters.Count();
         }
     }
 }

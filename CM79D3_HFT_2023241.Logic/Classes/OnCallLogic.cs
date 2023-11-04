@@ -24,7 +24,12 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public OnCall Read(int id)
         {
-            return this.repo.Read(id);
+            var oc = repo.Read(id);
+            if (oc == null)
+            {
+                throw new ArgumentException($"OnCall doesn't exists. ({id})");
+            }
+            return oc;
         }
 
         public IQueryable<OnCall> ReadAll()
