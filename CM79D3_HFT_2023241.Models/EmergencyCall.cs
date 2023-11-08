@@ -34,11 +34,12 @@ namespace CM79D3_HFT_2023241.Models
         [Required]
         public DateTime DateTime { get; set; }
 
+        [ForeignKey(nameof(FireStation))]
+        public int FireStation_ID { get; set; }
         [NotMapped]
-        public virtual ICollection<Firefighter> Firefighters { get; set; }
+        public virtual FireStation FireStation { get; set; }
         public EmergencyCall()
         {
-            Firefighters = new HashSet<Firefighter>();
         }
     }
 }

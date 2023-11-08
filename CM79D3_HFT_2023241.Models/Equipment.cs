@@ -26,11 +26,12 @@ namespace CM79D3_HFT_2023241.Models
         public string Type { get; set; }
         [Required]
         public EquipmentCondition Condition { get; set; }
+        [ForeignKey(nameof(Firefighter))]
+        public int Firefighter_ID { get; set; }
         [NotMapped]
-        public virtual ICollection<Firefighter> Firefighters { get; set;}
+        public virtual Firefighter Firefighter { get; set; }
         public Equipment()
         {
-            Firefighters = new HashSet<Firefighter>();
         }
     }
 }

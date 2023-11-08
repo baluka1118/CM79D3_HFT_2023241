@@ -22,9 +22,12 @@ namespace CM79D3_HFT_2023241.Models
         public string ContactInformation { get; set; }
         [NotMapped]
         public virtual ICollection<Firefighter> Firefighters { get; set; }
+        [NotMapped]
+        public virtual ICollection<EmergencyCall> EmergencyCalls { get; set; }
         public FireStation()
         {
             Firefighters = new HashSet<Firefighter>();
+            EmergencyCalls = new HashSet<EmergencyCall>();
         }
     }
 }

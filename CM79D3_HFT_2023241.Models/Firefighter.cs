@@ -30,12 +30,9 @@ namespace CM79D3_HFT_2023241.Models
         public virtual FireStation FireStation { get; set; }
         [NotMapped]
         public virtual ICollection<Equipment> Equipment { get; set; }
-        [NotMapped]
-        public virtual ICollection<EmergencyCall> EmergencyCalls { get; set; }
         public Firefighter()
         {
             Equipment = new HashSet<Equipment>();
-            EmergencyCalls = new HashSet<EmergencyCall>();
         }
     }
 }
