@@ -14,5 +14,6 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
         void Create(FireStation item);
         void Update(FireStation item);
         void Delete(int id);
+        public int HowManyFirefighters(int id);
     }
 }

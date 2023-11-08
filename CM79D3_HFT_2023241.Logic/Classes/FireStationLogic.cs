@@ -30,7 +30,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             var station = repo.Read(id);
             if (station == null)
             {
-                throw new ArgumentException($"Fire Station doesn't exists. ({id})");
+                throw new ArgumentException($"Fire Station doesn't exist. ({id})");
             }
             return station;
         }
@@ -49,9 +49,9 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int? HowManyFirefighters(int id)
+        public int HowManyFirefighters(int id)
         {
-            return this.repo.Read(id).Firefighters.Count();
+            return this.repo.Read(id).Firefighters.Count;
         }
     }
 }

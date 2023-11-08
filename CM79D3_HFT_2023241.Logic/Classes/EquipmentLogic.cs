@@ -12,6 +12,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
     public class EquipmentLogic : IEquipmentLogic
     {
         IRepository<Equipment> repo;
+        public EquipmentLogic(IRepository<Equipment> repo)
+        {
+            this.repo = repo;
+        }
         public void Create(Equipment item)
         {
             this.repo.Create(item);
@@ -27,7 +31,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             var eq = repo.Read(id);
             if (eq == null)
             {
-                throw new ArgumentException($"Equipment doesn't exists. ({id})");
+                throw new ArgumentException($"Equipment doesn't exist. ({id})");
             }
             return eq;
         }

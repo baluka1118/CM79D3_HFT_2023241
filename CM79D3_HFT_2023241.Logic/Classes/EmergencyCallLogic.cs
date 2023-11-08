@@ -12,6 +12,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
     public class EmergencyCallLogic : IEmergencyCallLogic
     {
         IRepository<EmergencyCall> repo;
+        public EmergencyCallLogic(IRepository<EmergencyCall> repo)
+        {
+            this.repo = repo;
+        }
         public void Create(EmergencyCall item)
         {
             this.repo.Create(item);
@@ -27,7 +31,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             var ec = repo.Read(id);
             if (ec == null)
             {
-                throw new ArgumentException($"Emergency Call doesn't exists. ({id})");
+                throw new ArgumentException($"Emergency Call doesn't exist. ({id})");
             }
             return ec;
         }

@@ -12,6 +12,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
     public class FirefighterLogic : IFirefighterLogic
     {
         IRepository<Firefighter> repo;
+        public FirefighterLogic(IRepository<Firefighter> repo)
+        {
+            this.repo = repo;
+        }
         public void Create(Firefighter item)
         {
             this.repo.Create(item);
@@ -27,7 +31,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             var ff = repo.Read(id);
             if (ff == null)
             {
-                throw new ArgumentException($"Firefighter doesn't exists. ({id})");
+                throw new ArgumentException($"Firefighter doesn't exist. ({id})");
             }
             return ff;
         }
