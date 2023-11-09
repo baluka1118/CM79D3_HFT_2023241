@@ -9,7 +9,7 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
 {
     public interface IEmergencyCallLogic
     {
-        IQueryable<EmergencyCall> ReadAll();
+        IEnumerable<EmergencyCall> ReadAll();
         EmergencyCall Read(int id);
         void Create(EmergencyCall item);
         void Update(EmergencyCall item);

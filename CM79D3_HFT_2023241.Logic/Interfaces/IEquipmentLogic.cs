@@ -9,7 +9,7 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
 {
     public interface IEquipmentLogic
     {
-        IQueryable<Equipment> ReadAll();
+        IEnumerable<Equipment> ReadAll();
         Equipment Read(int id);
         void Create(Equipment item);
         void Update(Equipment item);

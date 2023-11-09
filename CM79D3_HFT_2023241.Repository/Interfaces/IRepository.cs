@@ -8,7 +8,7 @@ namespace CM79D3_HFT_2023241.Repository.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        IQueryable<T> ReadAll();
+        IEnumerable<T> ReadAll();
         T Read(int id);
         void Create(T item);
         void Update(T item);

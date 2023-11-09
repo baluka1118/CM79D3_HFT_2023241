@@ -36,7 +36,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             return eq;
         }
 
-        public IQueryable<Equipment> ReadAll()
+        public IEnumerable<Equipment> ReadAll()
         {
             return this.repo.ReadAll();
         }

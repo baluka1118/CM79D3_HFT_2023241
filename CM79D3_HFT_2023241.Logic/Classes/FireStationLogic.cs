@@ -3,6 +3,7 @@ using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository;
 using CM79D3_HFT_2023241.Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CM79D3_HFT_2023241.Logic.Classes
@@ -35,7 +36,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             return station;
         }
 
-        public IQueryable<FireStation> ReadAll()
+        public IEnumerable<FireStation> ReadAll()
         {
             return repo.ReadAll();
         }

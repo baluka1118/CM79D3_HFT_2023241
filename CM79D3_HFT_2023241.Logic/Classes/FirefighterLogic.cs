@@ -36,7 +36,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             return ff;
         }
 
-        public IQueryable<Firefighter> ReadAll()
+        public IEnumerable<Firefighter> ReadAll()
         {
             return this.repo.ReadAll();
         }

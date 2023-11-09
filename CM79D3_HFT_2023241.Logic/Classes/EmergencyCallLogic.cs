@@ -36,7 +36,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             return ec;
         }
 
-        public IQueryable<EmergencyCall> ReadAll()
+        public IEnumerable<EmergencyCall> ReadAll()
         {
             return this.repo.ReadAll();
         }
