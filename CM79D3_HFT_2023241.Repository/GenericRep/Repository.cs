@@ -21,7 +21,7 @@ namespace CM79D3_HFT_2023241.Repository.GenericRep
             ctx.SaveChanges();
         }
 
-        public IEnumerable<T> ReadAll()
+        public IQueryable<T> ReadAll()
         {
             return ctx.Set<T>();
         }

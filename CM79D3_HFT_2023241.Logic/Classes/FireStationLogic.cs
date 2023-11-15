@@ -1,4 +1,5 @@
-﻿using CM79D3_HFT_2023241.Logic.Interfaces;
+﻿using CM79D3_HFT_2023241.Logic.ClassesForQueries;
+using CM79D3_HFT_2023241.Logic.Interfaces;
 using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository;
 using CM79D3_HFT_2023241.Repository.Interfaces;
@@ -50,9 +51,15 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int HowManyFirefighters(int id)
+        public IEnumerable<FightersByStation> HowManyFirefightersByStation()
         {
-            return this.repo.Read(id).Firefighters.Count;
+            var q1 = from x in repo.ReadAll()
+                     select new FightersByStation
+                     {
+                         Name = x.Name,
+                         FirefightersCount = x.Firefighters.Count
+                     };
+            return q1;
         }
     }
 }
