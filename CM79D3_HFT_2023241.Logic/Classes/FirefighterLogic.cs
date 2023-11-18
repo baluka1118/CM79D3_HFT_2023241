@@ -45,5 +45,14 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         {
             this.repo.Update(item);
         }
+        /// <summary>
+        /// Query for getting data on which firefighters have no (and therefore need to get) equipment.
+        /// </summary>
+        /// <returns>Collection of firefighters with no equipment.</returns>
+        public IEnumerable<Firefighter> FireFightersWithoutEquipment()
+        {
+            return repo.ReadAll().Where(x => x.Equipment == null);
+        }
+
     }
 }

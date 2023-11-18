@@ -14,5 +14,6 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
         void Create(Firefighter item);
         void Update(Firefighter item);
         void Delete(int id);
+        public IEnumerable<Firefighter> FireFightersWithoutEquipment();
     }
 }

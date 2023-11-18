@@ -48,11 +48,11 @@ namespace CM79D3_HFT_2023241.Logic.Classes
             repo.Update(item);
         }
         /// <summary>
-        /// Returns how many firefighters there are in the fire station with the given id.
+        /// Query for getting data on the firefighters by Station.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public IEnumerable<FightersByStation> HowManyFirefightersByStation()
+        /// <returns>How many firefighters there are in the fire station with the given id.</returns>
+        public IEnumerable<FightersByStation> HowManyFirefightersByStation() //itt vagy FireFighterLogic-ban?
         {
             var q1 = from x in repo.ReadAll()
                      select new FightersByStation
@@ -62,6 +62,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                      };
             return q1;
         }
+        /// <summary>
+        /// Query for getting data on how many calls a station receive by type.
+        /// </summary>
+        /// <returns>KeyValuePair where the key is the name of the FireStation and the value is a Dictionary consisting of IncidentTypes and the count of EmergencyCalls with that type.</returns>
         public IEnumerable<KeyValuePair<string, Dictionary<IncidentType, int>>> EmergencyCallsCountByStationAndType()
         {
             var result = repo.ReadAll()
@@ -76,6 +80,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                 ));
             return result;
         }
+        /// <summary>
+        /// Query for getting data on the distribution of ranks in the station.
+        /// </summary>
+        /// <returns>KeyValuePairs where the key is the rank and the value is the count of firefighters with that rank.</returns>
         public IEnumerable<KeyValuePair<string, int>> RankDistribution()
         {
             var result = from x in repo.ReadAll().SelectMany(t => t.Firefighters)
@@ -86,7 +94,6 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                          );
             return result;
         }
-
-
+        
     }
 }

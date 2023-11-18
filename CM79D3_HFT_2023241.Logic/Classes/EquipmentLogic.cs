@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CM79D3_HFT_2023241.Logic.Classes
 {
-    public class EquipmentLogic : IEquipmentLogic
+    public class EquipmentLogic : IEquipmentLogic //non-crud?
     {
         IRepository<Equipment> repo;
         public EquipmentLogic(IRepository<Equipment> repo)
