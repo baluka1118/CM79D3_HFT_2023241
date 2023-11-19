@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CM79D3_HFT_2023241.Models.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,16 +23,22 @@ namespace CM79D3_HFT_2023241.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ToString]
         public int Id { get; set; }
         [Required, StringLength(50)]
-        public string CallerName { get; set; }
+        [ToString]
+        public string callername { get; set; }
         [StringLength(50)]
+        [ToString]
         public string CallerPhone { get; set;}
         [Required, StringLength(50)]
+        [ToString]
         public string IncidentLocation { get; set; }
         [Required]
+        [ToString]
         public IncidentType IncidentType { get; set; }
         [Required]
+        [ToString]
         public DateTime DateTime { get; set; }
 
         [ForeignKey(nameof(FireStation))]
@@ -40,6 +47,10 @@ namespace CM79D3_HFT_2023241.Models
         public virtual FireStation FireStation { get; set; }
         public EmergencyCall()
         {
+        }
+        public override string ToString()
+        {
+            return StaticMethods.ToStringHelper(this) + "   " + "FireStation\t\t=>" + FireStation.Name;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CM79D3_HFT_2023241.Models.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +16,19 @@ namespace CM79D3_HFT_2023241.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ToString]
         public int Id { get; set; }
         [Required,StringLength(50)]
+        [ToString]
         public string FirstName { get; set; }
         [Required,StringLength(50)]
+        [ToString]
         public string LastName { get; set; }
         [StringLength(30)]
+        [ToString]
         public string Rank { get; set; }
         [Required,StringLength(50)]
+        [ToString]
         public string ContactInformation { get; set; }
         [ForeignKey(nameof(FireStation))]
         public int FireStation_ID { get; set; }
@@ -33,6 +39,10 @@ namespace CM79D3_HFT_2023241.Models
         public Firefighter()
         {
             Equipment = new HashSet<Equipment>();
+        }
+        public override string ToString()
+        {
+            return StaticMethods.ToStringHelper(this) + "   " + "FireStation\t\t=>" + FireStation.Name;
         }
     }
 }
