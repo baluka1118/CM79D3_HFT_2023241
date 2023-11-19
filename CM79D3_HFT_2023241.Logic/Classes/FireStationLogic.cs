@@ -21,12 +21,18 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public void Create(FireStation item)
         {
+            if (item.Name == null || item.Name.Length > 100 || item.Location == null || 
+                item?.ContactInformation?.Length > 100)
+            {
+                throw new ArgumentException("The FireStation isn't defined correctly.");
+            }
             repo.Create(item);
         }
 
         public void Delete(int id)
         {
-            repo.Delete(id);
+            this.Read(id); //throws argumentexception if station doesnt exist
+            repo.Delete(id); 
         }
         public FireStation Read(int id)
         {

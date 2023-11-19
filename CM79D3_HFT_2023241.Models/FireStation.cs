@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CM79D3_HFT_2023241.Models
 {
     /// <summary>
-    /// Defines a fire station where firefighters work.
+    /// Defines a fire station where firefighters work and emergency calls happen.
     /// </summary>
     public class FireStation
     {

@@ -18,11 +18,16 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         }
         public void Create(Firefighter item)
         {
+            if (item.FirstName == null || item.FirstName.Length > 50 || item.LastName == null || item.LastName.Length > 50 || item?.Rank?.Length > 30 || item.ContactInformation == null || item.ContactInformation.Length > 50 || item.FireStation_ID == 0)
+            {
+                throw new ArgumentException("The Firefighter isn't defined correctly.");
+            }
             this.repo.Create(item);
         }
 
         public void Delete(int id)
         {
+            this.Read(id);
             this.repo.Delete(id);
         }
 

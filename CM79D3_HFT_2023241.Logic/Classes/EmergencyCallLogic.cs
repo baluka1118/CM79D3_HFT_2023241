@@ -19,11 +19,19 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         }
         public void Create(EmergencyCall item)
         {
+            if (item.CallerName == null || item.CallerName.Length > 50 || 
+                item?.CallerPhone?.Length > 50 || item.IncidentLocation == null || item.IncidentLocation.Length > 50
+                || !Enum.IsDefined(typeof(IncidentType),item.IncidentType) || item.DateTime == DateTime.MinValue 
+                || item.FireStation_ID == 0)
+            {
+                throw new ArgumentException("The EmergencyCall isn't defined correctly.");
+            }
             this.repo.Create(item);
         }
 
         public void Delete(int id)
         {
+            this.Read(id);
             this.repo.Delete(id);
         }
 
