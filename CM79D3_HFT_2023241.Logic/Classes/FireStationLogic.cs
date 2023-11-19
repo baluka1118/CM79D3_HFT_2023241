@@ -51,15 +51,11 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// Query for getting data on the firefighters by Station.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>How many firefighters there are in the fire station with the given id.</returns>
-        public IEnumerable<FightersByStation> HowManyFirefightersByStation() //itt vagy FireFighterLogic-ban?
+        /// <returns>How many firefighters there are in each fire station.</returns>
+        public IEnumerable<KeyValuePair<string,int>> HowManyFirefightersByStation() 
         {
             var q1 = from x in repo.ReadAll()
-                     select new FightersByStation
-                     {
-                         Name = x.Name,
-                         FirefightersCount = x.Firefighters.Count
-                     };
+                     select new KeyValuePair<string, int>(x.Name, x.Firefighters.Count);
             return q1;
         }
         /// <summary>
