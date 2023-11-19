@@ -18,7 +18,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         }
         public void Create(Equipment item)
         {
-            if (item.Type == null || item.Type.Length > 50 ||
+            if (item.Type == null || item.Type.Length > 50 || 
                 !Enum.IsDefined(typeof(EquipmentCondition),item.Condition) || item.Firefighter_ID == 0)
             {
                 throw new ArgumentException("The Equipment isn't defined correctly.");

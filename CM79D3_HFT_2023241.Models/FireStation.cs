@@ -18,13 +18,13 @@ namespace CM79D3_HFT_2023241.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [ToString]
         public int Id { get; set; }
-        [Required, StringLength(100)]
+        [Required, StringLength(50)]
         [ToString]
         public string Name { get; set; }
         [Required]
         [ToString]
         public string Location { get; set; }
-        [StringLength(100)]
+        [StringLength(50)]
         [ToString]
         public string ContactInformation { get; set; }
         [NotMapped]

@@ -21,8 +21,8 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public void Create(FireStation item)
         {
-            if (item.Name == null || item.Name.Length > 100 || item.Location == null || 
-                item?.ContactInformation?.Length > 100)
+            if (item.Name == null || item.Name.Length > 50 || item.Location == null || 
+                item?.ContactInformation?.Length > 50)
             {
                 throw new ArgumentException("The FireStation isn't defined correctly.");
             }
