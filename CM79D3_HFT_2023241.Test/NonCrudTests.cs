@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +17,11 @@ namespace CM79D3_HFT_2023241.Test
     {
         FireStationLogic fsLogic;
         FirefighterLogic ffLogic;
-        EmergencyCallLogic ecLogic;
-
         Mock<IRepository<FireStation>> mockFSRepository;
         Mock<IRepository<Firefighter>> mockFFRepository;
-        Mock<IRepository<EmergencyCall>> mockECRepository;
 
         IQueryable<FireStation> mockFirestations;
         IQueryable<Firefighter> mockFirefighters;
-        IQueryable<EmergencyCall> mockEmergencyCalls;
 
         [SetUp]
         public void Setup()
@@ -40,6 +37,7 @@ namespace CM79D3_HFT_2023241.Test
                     EmergencyCalls = new List<EmergencyCall>
                     {
                         new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = DateTime.Now },
+                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now },
                         new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now },
                     },
                     Firefighters = new List<Firefighter>
@@ -63,6 +61,7 @@ namespace CM79D3_HFT_2023241.Test
                     {
                         new Firefighter { Id = 3, FirstName = "John B", LastName = "Doe B", Rank = "Captain", ContactInformation = "John.DoeB@example.com" },
                         new Firefighter { Id = 4, FirstName = "Jane B", LastName = "Smith B", Rank = "Lieutenant", ContactInformation = "Jane.SmithB@example.com" },
+                         new Firefighter { Id = 5, FirstName = "Joe A", LastName = "Wayne A", Rank = "Captain", ContactInformation = "Joe.WayneA@example.com" },
                     }
                 },
             }.AsQueryable();
@@ -97,13 +96,6 @@ namespace CM79D3_HFT_2023241.Test
                 },
             }.AsQueryable();
 
-            mockEmergencyCalls = new List<EmergencyCall> //kell e firestation
-                    {
-                        new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = DateTime.Now, FireStation_ID = 1 },
-                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now, FireStation_ID = 2},
-                    }.AsQueryable();
-
-
             mockFSRepository = new Mock<IRepository<FireStation>>();
             mockFSRepository.Setup(fs => fs.ReadAll()).Returns(mockFirestations);
             fsLogic = new FireStationLogic(mockFSRepository.Object);
@@ -111,10 +103,67 @@ namespace CM79D3_HFT_2023241.Test
             mockFFRepository = new Mock<IRepository<Firefighter>>();
             mockFFRepository.Setup(ff => ff.ReadAll()).Returns(mockFirefighters);
             ffLogic = new FirefighterLogic(mockFFRepository.Object);
+        }
+        [Test]
+        public void HowManyFirefightersByStationTest()
+        {
+            var result = fsLogic.HowManyFirefightersByStation();
+            
+            Assert.IsNotNull(result);
 
-            mockECRepository = new Mock<IRepository<EmergencyCall>>();
-            mockECRepository.Setup(ec => ec.ReadAll()).Returns(mockEmergencyCalls);
-            ecLogic = new EmergencyCallLogic(mockECRepository.Object);
+            IEnumerable<KeyValuePair<string, int>> expected = new List<KeyValuePair<string, int>>
+            {
+                new KeyValuePair<string,int>("Station A", 2),
+                new KeyValuePair<string,int>("Station B", 3),
+            };
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void EmergencyCallsCountByStationAndTypeTest()
+        {
+            var result = fsLogic.EmergencyCallsCountByStationAndType();
+            Assert.IsNotNull(result);
+            var expected = new List<KeyValuePair<string, Dictionary<IncidentType, int>>>()
+            {
+                new KeyValuePair<string, Dictionary<IncidentType, int>>("Station A",
+                new Dictionary<IncidentType, int>()
+                {
+                    {IncidentType.Fire, 1 },
+                    {IncidentType.MedicalEmergency, 2 }
+                }),
+                new KeyValuePair<string, Dictionary<IncidentType, int>>("Station B",
+                new Dictionary<IncidentType, int>()
+                {
+                    {IncidentType.Fire, 1 },
+                    {IncidentType.MedicalEmergency, 1 }
+                }),
+            };
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
+        public void RankDistributionTest()
+        {
+            var result = fsLogic.RankDistribution();
+            Assert.IsNotNull(result);
+            var expected = new List<KeyValuePair<string, Dictionary<string, int>>>()
+            {
+                new KeyValuePair<string, Dictionary< string, int >>("Station A",
+                new Dictionary<string, int>()
+                {
+                    {"Captain", 1},
+                    {"Lieutenant", 1}
+                }
+                ),
+
+                new KeyValuePair<string, Dictionary< string, int >>("Station B",
+                new Dictionary<string, int>()
+                {
+                    {"Captain", 2},
+                    {"Lieutenant", 1}
+                }
+                ),
+            };
+            Assert.AreEqual(expected, result);
         }
     }
 }

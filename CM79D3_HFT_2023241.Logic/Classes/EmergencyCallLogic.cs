@@ -54,49 +54,5 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         {
             this.repo.Update(item);
         }
-        /// <summary>
-        /// Query for getting data on the EC's by season.
-        /// </summary>
-        /// <returns>
-        ///Emergency Calls grouped and ordered by season (winter, spring...) and FireStation (name).</returns>
-        public IEnumerable<EmergencyCallsBySeasonAndFireStationResult> EmergencyCallsBySeason()
-        {
-            var result = from emergencyCall in repo.ReadAll()
-                         let season = GetSeason(emergencyCall.DateTime.Month)
-                         orderby emergencyCall.FireStation.Name, season
-                         group emergencyCall by new { Season = season, FireStation = emergencyCall.FireStation.Name } into groupedCalls
-                         select new EmergencyCallsBySeasonAndFireStationResult
-                         {
-                             Season = groupedCalls.Key.Season,
-                             FireStation = groupedCalls.Key.FireStation,
-                             EmergencyCalls = groupedCalls
-                         };
-
-            return result;
-        }
-        private static string GetSeason(int month)
-        {
-            switch (month)
-            {
-                case 12:
-                case 1:
-                case 2:
-                    return "Winter";
-                case 3:
-                case 4:
-                case 5:
-                    return "Spring";
-                case 6:
-                case 7:
-                case 8:
-                    return "Summer";
-                case 9:
-                case 10:
-                case 11:
-                    return "Autumn";
-                default:
-                    return "Unknown";
-            }
-        }
     }
 }

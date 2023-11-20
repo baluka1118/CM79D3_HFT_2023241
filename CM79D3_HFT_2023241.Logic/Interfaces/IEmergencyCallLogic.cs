@@ -15,6 +15,5 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
         void Create(EmergencyCall item);
         void Update(EmergencyCall item);
         void Delete(int id);
-        public IEnumerable<EmergencyCallsBySeasonAndFireStationResult> EmergencyCallsBySeason();
     }
 }
