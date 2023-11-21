@@ -105,25 +105,22 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// </summary>
         /// <returns>
         /// Emergency Calls grouped and ordered by season (winter, spring...) and FireStation (name).</returns>
-        public IEnumerable<EmergencyCallsBySeasonAndFireStationResult> EmergencyCallsBySeason()
+        public IEnumerable<EmergencyCallsBySeasonResult> EmergencyCallsBySeason()
         {
             var result = from fireStation in repo.ReadAll()
-                         from emergencyCall in fireStation.EmergencyCalls // Assuming EmergencyCalls is a collection property in FireStation
+                         from emergencyCall in fireStation.EmergencyCalls 
                          let season = GetSeason(emergencyCall.DateTime.Month)
                          orderby fireStation.Name, season
                          group emergencyCall by new { Season = season, FireStation = fireStation.Name } into groupedCalls
-                         select new EmergencyCallsBySeasonAndFireStationResult
+                         select new EmergencyCallsBySeasonResult
                          {
                              Season = groupedCalls.Key.Season,
                              FireStation = groupedCalls.Key.FireStation,
-                             EmergencyCalls = groupedCalls
+                             EmergencyCalls = groupedCalls.ToList()
                          };
 
             return result;
         }
-
-        // Your other FireStationLogic methods...
-
         private static string GetSeason(int month)
         {
             switch (month)

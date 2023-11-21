@@ -18,7 +18,7 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
         public IEnumerable<KeyValuePair<string, int>> HowManyFirefightersByStation();
         public IEnumerable<KeyValuePair<string, Dictionary<string, int>>> RankDistribution();
         public IEnumerable<KeyValuePair<string, Dictionary<IncidentType, int>>> EmergencyCallsCountByStationAndType();
-        public IEnumerable<EmergencyCallsBySeasonAndFireStationResult> EmergencyCallsBySeason();
+        public IEnumerable<EmergencyCallsBySeasonResult> EmergencyCallsBySeason();
 
     }
 }

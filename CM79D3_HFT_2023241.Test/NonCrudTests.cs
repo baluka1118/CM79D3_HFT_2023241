@@ -1,4 +1,5 @@
 ﻿using CM79D3_HFT_2023241.Logic.Classes;
+using CM79D3_HFT_2023241.Logic.ClassesForQueries;
 using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository.Interfaces;
 using Moq;
@@ -36,9 +37,9 @@ namespace CM79D3_HFT_2023241.Test
                     ContactInformation = "Contact A",
                     EmergencyCalls = new List<EmergencyCall>
                     {
-                        new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = DateTime.Now },
-                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now },
-                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now },
+                        new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023,1,12) },
+                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023,6,12)  },
+                        new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023,4,12)  },
                     },
                     Firefighters = new List<Firefighter>
                     {
@@ -54,8 +55,8 @@ namespace CM79D3_HFT_2023241.Test
                     ContactInformation = "Contact B",
                     EmergencyCalls = new List<EmergencyCall>
                     {
-                        new EmergencyCall { Id = 3, CallerName = "Caller B1", CallerPhone = "123-456-7890", IncidentLocation = "Location B1", IncidentType = IncidentType.Fire, DateTime = DateTime.Now },
-                        new EmergencyCall { Id = 4, CallerName = "Caller B2", CallerPhone = "987-654-3210", IncidentLocation = "Location B2", IncidentType = IncidentType.MedicalEmergency, DateTime = DateTime.Now },
+                        new EmergencyCall { Id = 3, CallerName = "Caller B1", CallerPhone = "123-456-7890", IncidentLocation = "Location B1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023,7,12)  },
+                        new EmergencyCall { Id = 4, CallerName = "Caller B2", CallerPhone = "987-654-3210", IncidentLocation = "Location B2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023,10,12)  },
                     },
                     Firefighters = new List<Firefighter>
                     {
@@ -108,7 +109,7 @@ namespace CM79D3_HFT_2023241.Test
         public void HowManyFirefightersByStationTest()
         {
             var result = fsLogic.HowManyFirefightersByStation();
-            
+
             Assert.IsNotNull(result);
 
             IEnumerable<KeyValuePair<string, int>> expected = new List<KeyValuePair<string, int>>
@@ -165,5 +166,50 @@ namespace CM79D3_HFT_2023241.Test
             };
             Assert.AreEqual(expected, result);
         }
+
+        //[Test]
+        //public void EmergencyCallsBySeasonTest()
+        //{
+        //    var result = fsLogic.EmergencyCallsBySeason().ToList();
+        //    Assert.IsNotNull(result);
+
+        //    var expected = new List<EmergencyCallsBySeasonResult>
+        //    {
+                 
+        //         new EmergencyCallsBySeasonResult()
+        //         {
+        //             FireStation = "Station A",
+        //             Season = "Spring",
+        //             EmergencyCalls = new List<EmergencyCall> {  new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023,4,12)  } }
+        //         },
+        //         new EmergencyCallsBySeasonResult()
+        //         {
+        //             FireStation = "Station A",
+        //             Season = "Summer",
+        //             EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 2, CallerName = "Caller A2", CallerPhone = "987-654-3210", IncidentLocation = "Location A2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023, 6, 12) } }
+        //         },
+        //         new EmergencyCallsBySeasonResult()
+        //         {
+        //             FireStation = "Station A",
+        //             Season = "Winter",
+        //             EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023, 1, 12) }, }
+        //         },
+
+        //         new EmergencyCallsBySeasonResult()
+        //         {
+        //             FireStation = "Station B",
+        //             Season = "Autumn",
+        //             EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 4, CallerName = "Caller B2", CallerPhone = "987-654-3210", IncidentLocation = "Location B2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023, 10, 12) } }
+        //         },
+        //         new EmergencyCallsBySeasonResult()
+        //         {
+        //             FireStation = "Station B",
+        //             Season = "Summer",
+        //             EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 3, CallerName = "Caller B1", CallerPhone = "123-456-7890", IncidentLocation = "Location B1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023, 7, 12) }, }
+        //         }
+        //    };
+        //    Assert.That(expected.Equals(result));
+        //}
+
     }
 }

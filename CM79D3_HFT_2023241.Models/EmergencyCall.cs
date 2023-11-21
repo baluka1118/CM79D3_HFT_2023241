@@ -52,5 +52,30 @@ namespace CM79D3_HFT_2023241.Models
         {
             return StaticMethods.ToStringHelper(this) + "   " + "FireStation\t\t=>" + FireStation.Name;
         }
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //       
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237  
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            if (obj is EmergencyCall e)
+            {
+                if (this.Id == e.Id && this.CallerName == e.CallerName && this.CallerPhone == e.CallerPhone && this.IncidentType == e.IncidentType &&
+                    this.IncidentLocation == e.IncidentLocation && this.FireStation_ID == e.FireStation_ID)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
     }
 }
