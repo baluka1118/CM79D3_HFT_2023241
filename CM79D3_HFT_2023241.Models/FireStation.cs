@@ -43,5 +43,17 @@ namespace CM79D3_HFT_2023241.Models
                 + "   " + "Firefighters\t\t=> " + Firefighters.Count
                 + "   " + "EmergencyCalls\t\t=> " + EmergencyCalls.Count;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is FireStation f)
+            {
+                return this.Id == f.Id &&
+                    this.Name == f.Name &&
+                    this.Location == f.Location &&
+                    this.ContactInformation == f.ContactInformation;
+            }
+            return false;
+        }
     }
 }

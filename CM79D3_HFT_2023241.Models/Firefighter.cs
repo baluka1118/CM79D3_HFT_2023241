@@ -42,7 +42,20 @@ namespace CM79D3_HFT_2023241.Models
         }
         public override string ToString()
         {
-            return StaticMethods.ToStringHelper(this) + "   " + "FireStation\t\t=>" + FireStation.Name;
+            return StaticMethods.ToStringHelper(this) + "   " + "FireStation\t\t=> " + FireStation?.Name;
+        }
+        public override bool Equals(object obj)
+        {
+            if(obj is Firefighter f)
+            {
+                return this.Id == f.Id &&
+                    this.FirstName == f.FirstName &&
+                    this.LastName == f.LastName &&
+                    this.Rank == f.Rank &&
+                    this.ContactInformation == f.ContactInformation &&
+                    this.FireStation_ID == f.FireStation_ID;
+            }
+            return false;
         }
     }
 }
