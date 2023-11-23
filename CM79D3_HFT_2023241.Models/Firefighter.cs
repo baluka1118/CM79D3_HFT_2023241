@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CM79D3_HFT_2023241.Models
@@ -33,6 +34,7 @@ namespace CM79D3_HFT_2023241.Models
         [ForeignKey(nameof(FireStation))]
         public int FireStation_ID { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual FireStation FireStation { get; set; }
         [NotMapped]
         public virtual ICollection<Equipment> Equipment { get; set; }

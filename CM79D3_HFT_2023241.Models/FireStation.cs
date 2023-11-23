@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace CM79D3_HFT_2023241.Models
 {
