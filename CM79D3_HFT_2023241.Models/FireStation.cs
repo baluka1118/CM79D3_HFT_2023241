@@ -42,7 +42,7 @@ namespace CM79D3_HFT_2023241.Models
         {
             return StaticMethods.ToStringHelper(this)
                 + "   " + "Firefighters\t\t=> " + Firefighters.Count
-                + "   " + "EmergencyCalls\t\t=> " + EmergencyCalls.Count;
+                + "\n\t\t" + "EmergencyCalls\t\t=> " + EmergencyCalls.Count;
         }
 
         public override bool Equals(object obj)

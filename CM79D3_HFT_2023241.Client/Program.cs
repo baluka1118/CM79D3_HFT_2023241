@@ -10,6 +10,80 @@ namespace CM79D3_HFT_2023241.Client
     {
         static RestService rest;
 
+        static void ListIncidentTypes(string type) //submenuként megvalósítható
+        {
+            int i = 0;
+            Type t;
+            if (type == "incident")
+            {
+                t = typeof(IncidentType);
+            }
+            else
+            {
+                t = typeof(EquipmentCondition);
+            }
+            foreach (var item in Enum.GetValues(t))
+            {
+                Console.WriteLine("\t" + item + ":  " + i);
+                i++;
+            }
+        }
+        static void Create(string x)
+        {
+            switch (x)
+            {
+                case "firestation":
+                    Console.Write("Enter FireStation Name: ");
+                    string name = Console.ReadLine();
+                    Console.Write("Enter FireStation Location: ");
+                    string location = Console.ReadLine();
+                    Console.Write("Enter FireStation ContactInformation: ");
+                    string contactinformation = Console.ReadLine();
+                    rest.Post(new FireStation() { Name = name, Location = location, ContactInformation = contactinformation }, "firestation");
+                    break;
+                case "firefighter":
+                    Console.Write("Enter FireFighter FirstName: ");
+                    string firstname = Console.ReadLine();
+                    Console.Write("Enter FireFighter LastName: ");
+                    string lastname = Console.ReadLine();
+                    Console.Write("Enter FireFighter Rank: ");
+                    string rank = Console.ReadLine();
+                    Console.Write("Enter FireStation ContactInformation: ");
+                    string contactinformation2 = Console.ReadLine();
+                    Console.Write("Enter FireFighter FireStation_ID: ");
+                    int firestationid = int.Parse(Console.ReadLine());
+                    rest.Post(new Firefighter() { FirstName = firstname,LastName = lastname, Rank = rank,ContactInformation = contactinformation2, FireStation_ID = firestationid }, "firefighter");
+                    break;
+                case "equipment":
+                    Console.Write("Equipment Conditions to choose from:");
+                    ListIncidentTypes("equipment");
+                    Console.Write("Enter Equipment Condition:");
+                    int condition = int.Parse(Console.ReadLine());
+                    Console.Write("Enter Equipment Type: ");
+                    string equipmenttype = Console.ReadLine();
+                    Console.Write("Enter Equipment Firefighter_ID: ");
+                    int firefighterid = int.Parse(Console.ReadLine());
+                    rest.Post(new Equipment() {Condition = (EquipmentCondition)condition,Type = equipmenttype, Firefighter_ID = firefighterid }, "equipment");
+                    break;
+                case "emergencycall":
+                    Console.Write("Enter EmergencyCall CallerName: ");
+                    string callername = Console.ReadLine();
+                    Console.Write("Enter EmergencyCall CallerPhone: ");
+                    string callerphone = Console.ReadLine();
+                    Console.Write("Enter EmergencyCall IncidentLocation: ");
+                    string incidentlocation = Console.ReadLine();
+                    Console.Write("Incident Types to choose from:");
+                    ListIncidentTypes("incident");
+                    Console.Write("Enter EmergencyCall IncidentType: ");
+                    int incidenttype = int.Parse(Console.ReadLine());
+                    Console.Write("Enter EmergencyCall Date (YYYY.MM.DD): ");
+                    DateTime date = DateTime.Parse(Console.ReadLine());
+                    Console.Write("Enter EmergencyCall FireStation_ID: ");
+                    int firestationid2 = int.Parse(Console.ReadLine());
+                    rest.Post(new EmergencyCall() {CallerName = callername, CallerPhone = callerphone, IncidentLocation = incidentlocation, IncidentType = (IncidentType)incidenttype, DateTime = date, FireStation_ID = firestationid2 }, "emergencycall");
+                    break;
+            }
+        }
         static void List(string x)
         {
             switch (x)
@@ -70,10 +144,7 @@ namespace CM79D3_HFT_2023241.Client
             throw new NotImplementedException();
         }
 
-        static void Create(string x)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         static void HowManyFirefightersByStation()
         {
@@ -132,7 +203,6 @@ namespace CM79D3_HFT_2023241.Client
                 .Add("EmergencyCalls", () => emergencycallSubMenu.Show())
                 .Add("Exit", ConsoleMenu.Close);
             menu.Show();
-            ;
         }
 
 

@@ -1,4 +1,4 @@
-﻿using CM79D3_HFT_2023241.Logic.ClassesForQueries;
+﻿using CM79D3_HFT_2023241.Logic;
 using CM79D3_HFT_2023241.Models;
 using System;
 using System.Collections.Generic;
