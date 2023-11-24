@@ -1,7 +1,7 @@
 ﻿using CM79D3_HFT_2023241.Models;
 using System.Collections.Generic;
 
-namespace CM79D3_HFT_2023241.Logic.ClassesForQueries
+namespace CM79D3_HFT_2023241.Models.ClassesForQueries
 {
     public class EmergencyCallsBySeasonResult
     {

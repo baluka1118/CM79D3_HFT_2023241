@@ -2,7 +2,7 @@
 using System;
 using ConsoleTools;
 using System.Collections.Generic;
-
+using CM79D3_HFT_2023241.Models.ClassesForQueries;
 
 namespace CM79D3_HFT_2023241.Client
 {
@@ -16,52 +16,87 @@ namespace CM79D3_HFT_2023241.Client
             {
                 case "firestation":
                     var firestations = rest.Get<FireStation>("firestation");
+                    Console.WriteLine("LISTING FIRESTATIONS");
                     foreach (var firestation in firestations)
                     {
-                        Console.WriteLine(firestation);
+                        Console.WriteLine(firestation + "\n");
                     }
+
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
                     break;
                 case "firefighter":
                     var firefighters = rest.Get<Firefighter>("firefighter");
+                    Console.WriteLine("LISTING FIREFIGHTERS");
                     foreach (var firefighter in firefighters)
                     {
-                        Console.WriteLine(firefighter);
+                        Console.WriteLine(firefighter + "\n");
                     }
+                    Console.ReadLine();
+                    Console.WriteLine("Press any key to continue...");
                     break;
                 case "equipment":
                     var equipments = rest.Get<Equipment>("equipment");
+                    Console.WriteLine("LISTING EQUIPMENT");
                     foreach (var equipment in equipments)
                     {
-                        Console.WriteLine(equipment);
+                        Console.WriteLine(equipment + "\n");
                     }
+
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
                     break;
                 case "emergencycall":
                     var emergencycalls = rest.Get<EmergencyCall>("emergencycall");
+                    Console.WriteLine("LISTING EMERGENCYCALLS");
                     foreach (var emergencycall in emergencycalls)
                     {
-                        Console.WriteLine(emergencycall);
+                        Console.WriteLine(emergencycall + "\n");
                     }
+
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
                     break;
+                    
             }
         }
-        static void Update(string firestation)
+        static void Update(string x)
         {
             throw new NotImplementedException();
         }
 
-        static void Delete(string firestation)
+        static void Delete(string x)
         {
             throw new NotImplementedException();
         }
 
-        static void Create(string firestation)
+        static void Create(string x)
         {
             throw new NotImplementedException();
+        }
+
+        static void HowManyFirefightersByStation()
+        {
+            var result = rest.Get<KeyValuePair<string,int>>("stat/howmanyfirefightersbystation");
+        }
+
+        static void EmergencyCallsCountByStationAndType()
+        {
+            var result = rest.Get<KeyValuePair<string, Dictionary<IncidentType, int>>>("stat/emergencycallscountbystationandtype");
+        }
+
+        static void RankDistribution()
+        {
+            var result = rest.Get<KeyValuePair<string, Dictionary<string, int>>>("stat/rankdistribution");
+        }
+
+        static void EmergencyCallsBySeason()
+        {
+            var result = rest.Get<EmergencyCallsBySeasonResult>("stat/emergencycallsbyseason");
         }
         static void Main(string[] args)
         {
-            rest = new RestService("http://localhost:26947/","firestation"); //???exception vagy benne ragad
-
+            rest = new RestService("http://localhost:26947/","firestation"); 
             var firestationSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("List", () => List("firestation"))
                 .Add("Create", () => Create("firestation"))

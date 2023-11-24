@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CM79D3_HFT_2023241.Endpoint.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EmergencyCallController : ControllerBase
     {

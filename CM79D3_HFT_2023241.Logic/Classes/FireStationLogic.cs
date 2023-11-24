@@ -1,5 +1,4 @@
-﻿using CM79D3_HFT_2023241.Logic.ClassesForQueries;
-using CM79D3_HFT_2023241.Logic.Interfaces;
+﻿using CM79D3_HFT_2023241.Logic.Interfaces;
 using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository;
 using CM79D3_HFT_2023241.Repository.Interfaces;
@@ -7,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CM79D3_HFT_2023241.Models.ClassesForQueries;
 
 namespace CM79D3_HFT_2023241.Logic.Classes
 {
@@ -60,9 +60,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// <returns>KeyValuePair where the key is the name of the firestation, and the value is the count of firefighters in that station.</returns>
         public IEnumerable<KeyValuePair<string,int>> HowManyFirefightersByStation() 
         {
-            var q1 = from x in repo.ReadAll()
-                     select new KeyValuePair<string, int>(x.Name, x.Firefighters.Count);
-            return q1;
+            var result = repo.ReadAll().ToList()
+                .Select(fireStation => new KeyValuePair<string, int>(fireStation.Name, fireStation.Firefighters.Count))
+                .ToList();
+            return result;
         }
         /// <summary>
         /// Query for getting data on how many calls a station receive by type.
@@ -70,7 +71,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// <returns>KeyValuePair where the key is the name of the FireStation and the value is a Dictionary consisting of IncidentTypes and the count of EmergencyCalls with that type.</returns>
         public IEnumerable<KeyValuePair<string, Dictionary<IncidentType, int>>> EmergencyCallsCountByStationAndType()
         {
-            var result = repo.ReadAll()
+            var result = repo.ReadAll().ToList()
                 .Select(fireStation => new KeyValuePair<string, Dictionary<IncidentType, int>>(
                     fireStation.Name,
                     fireStation.EmergencyCalls
@@ -79,7 +80,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                             group => group.Key,
                             group => group.Count()
                         )
-                ));
+                )).ToList();
             return result;
         }
         /// <summary>
@@ -88,7 +89,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// <returns>KeyValuePairs where the key is the firestation name and the value is a dictionary with keys being the ranks and values being the count of firefighters with that rank.</returns>
         public IEnumerable<KeyValuePair<string, Dictionary<string, int>>> RankDistribution()
         {
-            var result = from fireStation in repo.ReadAll()
+            var result = from fireStation in repo.ReadAll().ToList()
                          group fireStation by fireStation.Name into groupedStations
                          select new KeyValuePair<string, Dictionary<string, int>>(
                              groupedStations.Key,
@@ -97,7 +98,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                                             .ToDictionary(t => t.Key, t => t.Count())
                      );
 
-            return result;
+            return result.ToList();
         }
 
         /// <summary>
@@ -107,10 +108,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// Emergency Calls grouped and ordered by season (winter, spring...) and FireStation (name).</returns>
         public IEnumerable<EmergencyCallsBySeasonResult> EmergencyCallsBySeason()
         {
-            var result = from fireStation in repo.ReadAll()
+            var result = from fireStation in repo.ReadAll().ToList()
                          from emergencyCall in fireStation.EmergencyCalls 
                          let season = GetSeason(emergencyCall.DateTime.Month)
-                         orderby fireStation.Name, season
+                         orderby season, fireStation.Name
                          group emergencyCall by new { Season = season, FireStation = fireStation.Name } into groupedCalls
                          select new EmergencyCallsBySeasonResult
                          {
@@ -119,7 +120,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
                              EmergencyCalls = groupedCalls.ToList()
                          };
 
-            return result;
+            return result.ToList();
         }
         private static string GetSeason(int month)
         {

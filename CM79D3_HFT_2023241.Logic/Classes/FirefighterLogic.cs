@@ -56,7 +56,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         /// <returns>Collection of firefighters with no equipment.</returns>
         public IEnumerable<Firefighter> FireFightersWithoutEquipment()
         {
-            return repo.ReadAll().Where(x => x.Equipment.Count == 0);
+            return repo.ReadAll().Where(x => x.Equipment.Count == 0).ToList();
         }
 
     }
