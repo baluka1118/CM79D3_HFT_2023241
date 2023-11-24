@@ -16,6 +16,8 @@ using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository.Database;
 using CM79D3_HFT_2023241.Repository.Interfaces;
 using CM79D3_HFT_2023241.Repository.ModelRepositories;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace CM79D3_HFT_2023241.Endpoint
 {
@@ -28,7 +30,6 @@ namespace CM79D3_HFT_2023241.Endpoint
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<FireFightingDbContext>();
@@ -50,7 +51,6 @@ namespace CM79D3_HFT_2023241.Endpoint
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -60,6 +60,14 @@ namespace CM79D3_HFT_2023241.Endpoint
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CM79D3_HFT_2023241.Endpoint v1"));
             }
 
+            app.UseExceptionHandler(c => c.Run(async context =>
+            {
+                var exception = context.Features
+                    .Get<IExceptionHandlerPathFeature>()
+                    .Error;
+                var response = new { Msg = exception.Message };
+                await context.Response.WriteAsJsonAsync(response);
+            }));
             app.UseRouting();
 
             app.UseAuthorization();
