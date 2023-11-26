@@ -39,7 +39,7 @@ namespace CM79D3_HFT_2023241.Endpoint.Controllers
         }
 
         // PUT api/<EmergencyCallController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public void Update([FromBody] EmergencyCall value)
         {
             logic.Update(value);

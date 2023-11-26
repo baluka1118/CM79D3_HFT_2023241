@@ -106,8 +106,8 @@ namespace CM79D3_HFT_2023241.Client
                     {
                         Console.WriteLine(firefighter + "\n");
                     }
-                    Console.ReadLine();
                     Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
                     break;
                 case "equipment":
                     var equipments = rest.Get<Equipment>("equipment");
