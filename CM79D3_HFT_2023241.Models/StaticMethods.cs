@@ -12,15 +12,14 @@ namespace CM79D3_HFT_2023241.Models
     {
         public static string ToStringHelper(object o)
         {
-            string s = "";
+            StringBuilder sb = new StringBuilder();
+
             foreach (var item in o.GetType().GetProperties().Where(t => t.GetCustomAttribute<ToStringAttribute>() != null))
             {
-                s += "   ";
-                s += item.Name + "\t\t =>";
-                s += item.GetValue(o);
-                s += "\n";
+                sb.AppendLine($"{item.Name,-25} => {item.GetValue(o)}");
             }
-            return s;
+
+            return sb.ToString();
         }
     }
 }

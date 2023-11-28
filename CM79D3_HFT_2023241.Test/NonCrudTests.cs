@@ -1,5 +1,4 @@
 ﻿using CM79D3_HFT_2023241.Logic.Classes;
-using CM79D3_HFT_2023241.Logic.ClassesForQueries;
 using CM79D3_HFT_2023241.Models;
 using CM79D3_HFT_2023241.Repository.Interfaces;
 using Moq;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CM79D3_HFT_2023241.Models.ClassesForQueries;
 
 namespace CM79D3_HFT_2023241.Test
 {
@@ -182,7 +182,12 @@ namespace CM79D3_HFT_2023241.Test
 
             var expected = new List<EmergencyCallsBySeasonResult>
             {
-
+                 new EmergencyCallsBySeasonResult()
+                 {
+                     FireStation = "Station B",
+                     Season = "Autumn",
+                     EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 5, CallerName = "Caller B2", CallerPhone = "987-654-3210", IncidentLocation = "Location B2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023, 10, 12) } }
+                 },
                  new EmergencyCallsBySeasonResult()
                  {
                      FireStation = "Station A",
@@ -198,23 +203,19 @@ namespace CM79D3_HFT_2023241.Test
                  },
                  new EmergencyCallsBySeasonResult()
                  {
-                     FireStation = "Station A",
-                     Season = "Winter",
-                     EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023, 1, 12) }, }
-                 },
-
-                 new EmergencyCallsBySeasonResult()
-                 {
-                     FireStation = "Station B",
-                     Season = "Autumn",
-                     EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 5, CallerName = "Caller B2", CallerPhone = "987-654-3210", IncidentLocation = "Location B2", IncidentType = IncidentType.MedicalEmergency, DateTime = new DateTime(2023, 10, 12) } }
-                 },
-                 new EmergencyCallsBySeasonResult()
-                 {
                      FireStation = "Station B",
                      Season = "Summer",
                      EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 4, CallerName = "Caller B1", CallerPhone = "123-456-7890", IncidentLocation = "Location B1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023, 7, 12) }, }
+                 },
+                 new EmergencyCallsBySeasonResult()
+                 {
+                     FireStation = "Station A",
+                     Season = "Winter",
+                     EmergencyCalls = new List<EmergencyCall> { new EmergencyCall { Id = 1, CallerName = "Caller A1", CallerPhone = "123-456-7890", IncidentLocation = "Location A1", IncidentType = IncidentType.Fire, DateTime = new DateTime(2023, 1, 12) }, }
                  }
+
+                 
+                 
             };
             Assert.AreEqual(expected,result);
         }

@@ -39,7 +39,16 @@ namespace CM79D3_HFT_2023241.Client
                     string location = Console.ReadLine();
                     Console.Write("Enter FireStation ContactInformation: ");
                     string contactinformation = Console.ReadLine();
-                    rest.Post(new FireStation() { Name = name, Location = location, ContactInformation = contactinformation }, "firestation");
+                    try
+                    {
+                        rest.Post(new FireStation() { Name = name, Location = location, ContactInformation = contactinformation }, "firestation");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+
+                        Console.ReadLine();
+                    }
                     break;
                 case "firefighter":
                     Console.Write("Enter FireFighter FirstName: ");
@@ -96,7 +105,7 @@ namespace CM79D3_HFT_2023241.Client
                         Console.WriteLine(firestation + "\n");
                     }
 
-                    Console.WriteLine("Press any key to continue...");
+                    Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
                 case "firefighter":
@@ -106,7 +115,7 @@ namespace CM79D3_HFT_2023241.Client
                     {
                         Console.WriteLine(firefighter + "\n");
                     }
-                    Console.WriteLine("Press any key to continue...");
+                    Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
                 case "equipment":
@@ -117,7 +126,7 @@ namespace CM79D3_HFT_2023241.Client
                         Console.WriteLine(equipment + "\n");
                     }
 
-                    Console.WriteLine("Press any key to continue...");
+                    Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
                 case "emergencycall":
@@ -128,7 +137,7 @@ namespace CM79D3_HFT_2023241.Client
                         Console.WriteLine(emergencycall + "\n");
                     }
 
-                    Console.WriteLine("Press any key to continue...");
+                    Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
                     
@@ -141,29 +150,74 @@ namespace CM79D3_HFT_2023241.Client
 
         static void Delete(string x)
         {
-            throw new NotImplementedException();
+            int id = int.Parse(Console.ReadLine());
+            rest.Delete(id,"");
         }
-
-        
-
         static void HowManyFirefightersByStation()
         {
+            Console.WriteLine("Count of Firefighters per station:");
             var result = rest.Get<KeyValuePair<string,int>>("stat/howmanyfirefightersbystation");
+            foreach (var x in result)
+            {
+                Console.WriteLine("Station: " + x.Key + " Firefighters: " + x.Value);
+            }
+            Console.ReadLine();
         }
 
         static void EmergencyCallsCountByStationAndType()
         {
+            Console.WriteLine("Count of EmergencyCalls per station and type:");
             var result = rest.Get<KeyValuePair<string, Dictionary<IncidentType, int>>>("stat/emergencycallscountbystationandtype");
+            foreach (var x in result)
+            {
+                Console.WriteLine("Station: " + x.Key);
+                foreach (var y in x.Value)
+                {
+                    Console.WriteLine("\tIncidentType: " + y.Key + " Count: " + y.Value);
+                }
+            }
+            Console.ReadLine();
         }
 
         static void RankDistribution()
         {
+            Console.WriteLine("Distribution of ranks in the Fire Stations:");
             var result = rest.Get<KeyValuePair<string, Dictionary<string, int>>>("stat/rankdistribution");
+            foreach (var x in result)
+            {
+                Console.WriteLine("Station: " + x.Key);
+                foreach (var y in x.Value)
+                {
+                    Console.WriteLine("\tRank: " + y.Key + " Count: " + y.Value);
+                }
+            }
+            Console.ReadLine();
         }
 
         static void EmergencyCallsBySeason()
         {
+            Console.WriteLine("Emergency Calls by season and station:");
             var result = rest.Get<EmergencyCallsBySeasonResult>("stat/emergencycallsbyseason");
+            foreach (var x in result)
+            {
+                Console.WriteLine(x.Season.ToUpper() + $":\n{x.FireStation}'s Emergency Calls:");
+                foreach (var VARIABLE in x.EmergencyCalls)
+                {
+                    Console.WriteLine("\n" + VARIABLE + "\n");
+                }
+            }
+            Console.ReadLine();
+        }
+
+        static void FirefightersWithoutEquipment()
+        { 
+            Console.WriteLine("Firefighters without equipment:");
+            var result = rest.Get<Firefighter>("stat/firefighterswithoutequipment");
+            foreach (var x in result)
+            {
+                Console.WriteLine(x);
+            }
+            Console.ReadLine();
         }
         static void Main(string[] args)
         {
@@ -196,11 +250,21 @@ namespace CM79D3_HFT_2023241.Client
                 .Add("Update", () => Update("emergencycall"))
                 .Add("Exit", ConsoleMenu.Close);
 
+
+            var statSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("Get the count of Firefighters per station", () => HowManyFirefightersByStation())
+                .Add("Get the count of EmergencyCalls per station and type", () => EmergencyCallsCountByStationAndType())
+                .Add("Get the distribution of ranks in the Fire Stations", () => RankDistribution())
+                .Add("Get the EmergencyCalls by season and Fire Station", () => EmergencyCallsBySeason())
+                .Add("Get the Firefighters without equipment", () => FirefightersWithoutEquipment())
+                .Add("Exit", ConsoleMenu.Close);
+
             var menu = new ConsoleMenu(args, level: 0)
                 .Add("FireStations", () => firestationSubMenu.Show())
                 .Add("FireFighters", () => firefighterSubMenu.Show())
                 .Add("Equipments", () => equipmentSubMenu.Show())
                 .Add("EmergencyCalls", () => emergencycallSubMenu.Show())
+                .Add("Statistics", () => statSubMenu.Show())
                 .Add("Exit", ConsoleMenu.Close);
             menu.Show();
         }

@@ -41,7 +41,7 @@ namespace CM79D3_HFT_2023241.Models
         }
         public override string ToString()
         {
-            return StaticMethods.ToStringHelper(this) + "   " + "FirefighterID\t\t=> " + Firefighter_ID;
+            return StaticMethods.ToStringHelper(this) + "FirefighterID\t\t  => " + Firefighter_ID;
         }
         public override bool Equals(object obj)
         {

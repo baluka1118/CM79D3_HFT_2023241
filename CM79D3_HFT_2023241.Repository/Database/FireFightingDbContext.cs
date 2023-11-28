@@ -97,16 +97,16 @@ namespace CM79D3_HFT_2023241.Repository.Database
             modelBuilder.Entity<Equipment>().HasData(new Equipment[]
             {
                 new Equipment { Id = 1, Type = "Fire Hose", Condition = EquipmentCondition.New, Firefighter_ID = 1},
-                new Equipment { Id = 2, Type = "AED", Condition = EquipmentCondition.New, Firefighter_ID = 2},
+                new Equipment { Id = 2, Type = "AED", Condition = EquipmentCondition.New, Firefighter_ID = 10},
                 new Equipment { Id = 3, Type = "Ladder", Condition = EquipmentCondition.Good, Firefighter_ID = 3},
                 new Equipment { Id = 4, Type = "Fire Extinguisher", Condition = EquipmentCondition.Fair, Firefighter_ID = 4},
-                new Equipment { Id = 5, Type = "Bunker Gear", Condition = EquipmentCondition.Good , Firefighter_ID = 5},
+                new Equipment { Id = 5, Type = "Bunker Gear", Condition = EquipmentCondition.Good , Firefighter_ID = 25},
                 new Equipment { Id = 6, Type = "Thermal Imaging Camera", Condition = EquipmentCondition.New , Firefighter_ID = 6},
-                new Equipment { Id = 7, Type = "Jaws of Life", Condition = EquipmentCondition.Poor, Firefighter_ID = 7},
+                new Equipment { Id = 7, Type = "Jaws of Life", Condition = EquipmentCondition.Poor, Firefighter_ID = 18},
                 new Equipment { Id = 8, Type = "Oxygen Tank", Condition = EquipmentCondition.Good , Firefighter_ID = 8},
                 new Equipment { Id = 9, Type = "Fire Hose", Condition = EquipmentCondition.Good , Firefighter_ID = 9},
-                new Equipment { Id = 10, Type = "First Aid Kit", Condition = EquipmentCondition.Fair, Firefighter_ID = 10},
-                new Equipment { Id = 11, Type = "First Aid Kit", Condition = EquipmentCondition.Good, Firefighter_ID = 3},
+                new Equipment { Id = 10, Type = "First Aid Kit", Condition = EquipmentCondition.Fair, Firefighter_ID = 21},
+                new Equipment { Id = 11, Type = "First Aid Kit", Condition = EquipmentCondition.Good, Firefighter_ID = 13},
             });
             modelBuilder.Entity<EmergencyCall>().HasData(new EmergencyCall[]
             {
