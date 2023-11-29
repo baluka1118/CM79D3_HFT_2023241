@@ -3,6 +3,8 @@ using System;
 using ConsoleTools;
 using System.Collections.Generic;
 using CM79D3_HFT_2023241.Models.ClassesForQueries;
+using System.Net.Http;
+using System.Net;
 
 namespace CM79D3_HFT_2023241.Client
 {
@@ -143,6 +145,78 @@ namespace CM79D3_HFT_2023241.Client
                     
             }
         }
+
+        static void ListOne(string x)
+        {
+
+            switch (x)
+            {
+                case "firestation":
+                    Console.Write("Enter FireStation ID: ");
+                    int id = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        var firestation = rest.Get<FireStation>(id, "firestation");
+                        Console.WriteLine("LISTING FIRESTATION");
+                        Console.WriteLine(firestation + "\n");
+                        Console.WriteLine("Press enter to continue...");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine($"ArgumentException: {e.Message}");
+                    }
+                    Console.ReadLine();
+                    break;
+                case "firefighter":
+                    Console.Write("Enter FireFighter ID: ");
+                    int id2 = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        var firefighter = rest.Get<Firefighter>(id2, "firefighter");
+                        Console.WriteLine("LISTING FIREFIGHTER");
+                        Console.WriteLine(firefighter + "\n");
+                        Console.WriteLine("Press enter to continue...");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+                case "equipment":
+                    Console.Write("Enter Equipment ID: ");
+                    int id3 = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        var equipment = rest.Get<Equipment>(id3, "equipment");
+                        Console.WriteLine("LISTING EQUIPMENT");
+                        Console.WriteLine(equipment + "\n");
+                        Console.WriteLine("Press enter to continue...");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+                case "emergencycall":
+                    Console.Write("Enter EmergencyCall ID: ");
+                    int id4 = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        var emergencycall = rest.Get<EmergencyCall>(id4, "emergencycall");
+                        Console.WriteLine("LISTING EMERGENCYCALL");
+                        Console.WriteLine(emergencycall + "\n");
+                        Console.WriteLine("Press enter to continue...");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+            }
+        }
         static void Update(string x)
         {
             throw new NotImplementedException();
@@ -223,6 +297,7 @@ namespace CM79D3_HFT_2023241.Client
         {
             rest = new RestService("http://localhost:26947/","firestation"); 
             var firestationSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("GetByID", () => ListOne("firestation"))
                 .Add("List", () => List("firestation"))
                 .Add("Create", () => Create("firestation"))
                 .Add("Delete", () => Delete("firestation"))
@@ -230,6 +305,7 @@ namespace CM79D3_HFT_2023241.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             var firefighterSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("GetByID", () => ListOne("firefighter"))
                 .Add("List", () => List("firefighter"))
                 .Add("Create", () => Create("firefighter"))
                 .Add("Delete", () => Delete("firefighter"))
@@ -237,6 +313,7 @@ namespace CM79D3_HFT_2023241.Client
                 .Add("Exit",ConsoleMenu.Close);
 
             var equipmentSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("GetByID", () => ListOne("equipment"))
                 .Add("List", () => List("equipment"))
                 .Add("Create", () => Create("equipment"))
                 .Add("Delete", () => Delete("equipment"))
@@ -244,6 +321,7 @@ namespace CM79D3_HFT_2023241.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             var emergencycallSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("GetByID", () => ListOne("emergencycall"))
                 .Add("List", () => List("emergencycall"))
                 .Add("Create", () => Create("emergencycall"))
                 .Add("Delete", () => Delete("emergencycall"))
