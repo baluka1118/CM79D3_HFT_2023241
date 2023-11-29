@@ -30,7 +30,7 @@ namespace CM79D3_HFT_2023241.Client
                 i++;
             }
         }
-        static void Create(string x)
+        static void Create(string x) //ide még kellene több try-catch
         {
             switch (x)
             {
@@ -154,17 +154,16 @@ namespace CM79D3_HFT_2023241.Client
                 case "firestation":
                     Console.Write("Enter FireStation ID: ");
                     int id = int.Parse(Console.ReadLine());
-                    try
+                    var firestation = rest.Get<FireStation>(id, "firestation");
+                    if (firestation == null)
                     {
-                        var firestation = rest.Get<FireStation>(id, "firestation");
-                        Console.WriteLine("LISTING FIRESTATION");
-                        Console.WriteLine(firestation + "\n");
-                        Console.WriteLine("Press enter to continue...");
+                        Console.WriteLine("This Fire Station doenst exist!");
+                        Console.ReadLine();
+                        return;
                     }
-                    catch (ArgumentException e)
-                    {
-                        Console.WriteLine($"ArgumentException: {e.Message}");
-                    }
+                    Console.WriteLine("LISTING FIRESTATION");
+                    Console.WriteLine(firestation + "\n");
+                    Console.WriteLine("Press enter to continue...");
                     Console.ReadLine();
                     break;
                 case "firefighter":

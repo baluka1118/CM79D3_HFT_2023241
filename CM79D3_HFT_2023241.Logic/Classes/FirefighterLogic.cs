@@ -34,10 +34,6 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public Firefighter Read(int id)
         {
             var ff = repo.Read(id);
-            if (ff == null)
-            {
-                throw new ArgumentException($"Firefighter doesn't exist. ({id})");
-            }
             return ff;
         }
 

@@ -28,17 +28,12 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public void Delete(int id)
         {
-            this.Read(id);
             this.repo.Delete(id);
         }
 
         public Equipment Read(int id)
         {
             var eq = repo.Read(id);
-            if (eq == null)
-            {
-                throw new ArgumentException($"Equipment doesn't exist. ({id})");
-            }
             return eq;
         }
 
