@@ -34,6 +34,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public Equipment Read(int id)
         {
             var eq = repo.Read(id);
+            if (eq == null)
+            {
+                throw new ArgumentException("The Equipment doesn't exist.");
+            }
             return eq;
         }
 

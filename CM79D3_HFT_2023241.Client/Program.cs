@@ -30,68 +30,206 @@ namespace CM79D3_HFT_2023241.Client
                 i++;
             }
         }
-        static void Create(string x) //ide még kellene több try-catch
+
+        private static void Create(string x)
         {
             switch (x)
+
             {
                 case "firestation":
                     Console.Write("Enter FireStation Name: ");
-                    string name = Console.ReadLine();
+                    var name = Console.ReadLine();
+                    while (string.IsNullOrEmpty(name) || name.Length > 50)
+                    {
+                        Console.Write("Name cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        name = Console.ReadLine();
+                    }
+
                     Console.Write("Enter FireStation Location: ");
-                    string location = Console.ReadLine();
+                    var location = Console.ReadLine();
+                    while (string.IsNullOrEmpty(location) || location.Length > 50)
+                    {
+                        Console.Write("Location cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        location = Console.ReadLine();
+                    }
+
                     Console.Write("Enter FireStation ContactInformation: ");
-                    string contactinformation = Console.ReadLine();
+                    var contactinformation = Console.ReadLine();
+                    while (string.IsNullOrEmpty(contactinformation) || contactinformation.Length > 50)
+                    {
+                        Console.Write(
+                            "ContactInformation cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        contactinformation = Console.ReadLine();
+                    }
+
                     try
                     {
-                        rest.Post(new FireStation() { Name = name, Location = location, ContactInformation = contactinformation }, "firestation");
+                        rest.Post(
+                            new FireStation
+                            {
+                                Name = name, Location = location, ContactInformation = contactinformation
+                            }, "firestation");
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
-
                         Console.ReadLine();
                     }
+
                     break;
                 case "firefighter":
                     Console.Write("Enter FireFighter FirstName: ");
-                    string firstname = Console.ReadLine();
+                    var firstname = Console.ReadLine();
+                    while (string.IsNullOrEmpty(firstname) || firstname.Length > 50)
+                    {
+                        Console.Write(
+                            "FirstName cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        firstname = Console.ReadLine();
+                    }
+
                     Console.Write("Enter FireFighter LastName: ");
-                    string lastname = Console.ReadLine();
+                    var lastname = Console.ReadLine();
+                    while (string.IsNullOrEmpty(lastname) || lastname.Length > 50)
+                    {
+                        Console.Write("LastName cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        lastname = Console.ReadLine();
+                    }
+
                     Console.Write("Enter FireFighter Rank: ");
-                    string rank = Console.ReadLine();
+                    var rank = Console.ReadLine();
+                    while (rank?.Length > 50)
+                    {
+                        Console.WriteLine("Rank cannot exceed 50 characters. Please enter a valid value: ");
+                        rank = Console.ReadLine();
+                    }
+
                     Console.Write("Enter FireStation ContactInformation: ");
-                    string contactinformation2 = Console.ReadLine();
+                    var contactinformation2 = Console.ReadLine();
+                    while (string.IsNullOrEmpty(contactinformation2) || contactinformation2.Length > 50)
+                    {
+                        Console.Write(
+                            "ContactInformation cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        contactinformation2 = Console.ReadLine();
+                    }
+
+                    int firestationid;
                     Console.Write("Enter FireFighter FireStation_ID: ");
-                    int firestationid = int.Parse(Console.ReadLine());
-                    rest.Post(new Firefighter() { FirstName = firstname,LastName = lastname, Rank = rank,ContactInformation = contactinformation2, FireStation_ID = firestationid }, "firefighter");
+                    while (!int.TryParse(Console.ReadLine(), out firestationid))
+                        Console.Write("Please enter a valid integer for FireStation_ID: ");
+                    try
+                    {
+                        rest.Post(
+                            new Firefighter
+                            {
+                                FirstName = firstname,
+                                LastName = lastname,
+                                Rank = rank,
+                                ContactInformation = contactinformation2,
+                                FireStation_ID = firestationid
+                            }, "firefighter");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
                     break;
                 case "equipment":
                     Console.Write("Equipment Conditions to choose from:");
                     ListIncidentTypes("equipment");
+                    int condition;
                     Console.Write("Enter Equipment Condition:");
-                    int condition = int.Parse(Console.ReadLine());
+                    while (!int.TryParse(Console.ReadLine(), out condition) || condition < 0 || condition > 4)
+                        Console.Write("Please enter a valid integer for Equipment Condition: ");
                     Console.Write("Enter Equipment Type: ");
-                    string equipmenttype = Console.ReadLine();
+                    var equipmenttype = Console.ReadLine();
+                    while (string.IsNullOrEmpty(equipmenttype) || equipmenttype.Length > 50)
+                    {
+                        Console.Write(
+                            "Equipment Type cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        equipmenttype = Console.ReadLine();
+                    }
+
+                    int firefighterid;
                     Console.Write("Enter Equipment Firefighter_ID: ");
-                    int firefighterid = int.Parse(Console.ReadLine());
-                    rest.Post(new Equipment() {Condition = (EquipmentCondition)condition,Type = equipmenttype, Firefighter_ID = firefighterid }, "equipment");
+                    while (!int.TryParse(Console.ReadLine(), out firefighterid))
+                        Console.Write("Please enter a valid integer for Firefighter_ID: ");
+                    try
+                    {
+                        rest.Post(
+                            new Equipment
+                            {
+                                Condition = (EquipmentCondition)condition,
+                                Type = equipmenttype,
+                                Firefighter_ID = firefighterid
+                            }, "equipment");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
+
                     break;
                 case "emergencycall":
                     Console.Write("Enter EmergencyCall CallerName: ");
-                    string callername = Console.ReadLine();
+                    var callername = Console.ReadLine();
+                    while (string.IsNullOrEmpty(callername) || callername.Length > 50)
+                    {
+                        Console.Write(
+                            "CallerName cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        callername = Console.ReadLine();
+                    }
+
                     Console.Write("Enter EmergencyCall CallerPhone: ");
-                    string callerphone = Console.ReadLine();
+                    var callerphone = Console.ReadLine();
+                    while (string.IsNullOrEmpty(callerphone) || callerphone.Length > 50)
+                    {
+                        Console.Write(
+                            "CallerPhone cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        callerphone = Console.ReadLine();
+                    }
+
                     Console.Write("Enter EmergencyCall IncidentLocation: ");
-                    string incidentlocation = Console.ReadLine();
+                    var incidentlocation = Console.ReadLine();
+                    while (string.IsNullOrEmpty(incidentlocation) || incidentlocation.Length > 50)
+                    {
+                        Console.Write(
+                            "IncidentLocation cannot be empty or exceed 50 characters. Please enter a valid value: ");
+                        incidentlocation = Console.ReadLine();
+                    }
+
                     Console.Write("Incident Types to choose from:");
                     ListIncidentTypes("incident");
+                    int incidenttype;
                     Console.Write("Enter EmergencyCall IncidentType: ");
-                    int incidenttype = int.Parse(Console.ReadLine());
+                    while (!int.TryParse(Console.ReadLine(), out incidenttype) || incidenttype < 0 || incidenttype > 6)
+                        Console.Write("Please enter a valid integer for IncidentType: ");
+                    DateTime date;
                     Console.Write("Enter EmergencyCall Date (YYYY.MM.DD): ");
-                    DateTime date = DateTime.Parse(Console.ReadLine());
+                    while (!DateTime.TryParse(Console.ReadLine(), out date))
+                        Console.Write("Please enter a valid date in the format YYYY.MM.DD: ");
+                    int firestationid2;
                     Console.Write("Enter EmergencyCall FireStation_ID: ");
-                    int firestationid2 = int.Parse(Console.ReadLine());
-                    rest.Post(new EmergencyCall() {CallerName = callername, CallerPhone = callerphone, IncidentLocation = incidentlocation, IncidentType = (IncidentType)incidenttype, DateTime = date, FireStation_ID = firestationid2 }, "emergencycall");
+                    while (!int.TryParse(Console.ReadLine(), out firestationid2))
+                        Console.Write("Please enter a valid integer for FireStation_ID: ");
+                    try
+                    {
+                        rest.Post(
+                            new EmergencyCall
+                            {
+                                CallerName = callername,
+                                CallerPhone = callerphone,
+                                IncidentLocation = incidentlocation,
+                                IncidentType = (IncidentType)incidenttype,
+                                DateTime = date,
+                                FireStation_ID = firestationid2
+                            }, "emergencycall");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                     break;
             }
         }
