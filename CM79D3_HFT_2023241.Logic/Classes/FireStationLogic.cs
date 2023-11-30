@@ -37,6 +37,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public FireStation Read(int id)
         {
             var station = repo.Read(id);
+            if (station == null)
+            {
+                throw new ArgumentException("The FireStation doesn't exist.");
+            }
             return station;
         }
 
