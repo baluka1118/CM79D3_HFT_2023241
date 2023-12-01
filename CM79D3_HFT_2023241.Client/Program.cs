@@ -11,7 +11,7 @@ namespace CM79D3_HFT_2023241.Client
     class Program
     {
         static RestService rest;
-
+        //PUSH
         static void ListIncidentTypes(string type) //submenuként megvalósítható
         {
             int i = 0;
