@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using CM79D3_HFT_2023241.Models.ClassesForQueries;
 using System.Net.Http;
 using System.Net;
+using System.Linq;
 
 namespace CM79D3_HFT_2023241.Client
 {
     class Program
     {
         static RestService rest;
-        //PUSH
         static void ListIncidentTypes(string type) //submenuként megvalósítható
         {
             int i = 0;
@@ -374,13 +374,412 @@ namespace CM79D3_HFT_2023241.Client
         }
         static void Update(string x)
         {
-            throw new NotImplementedException();
+            Console.Write($"Would you like to list the {x}s before choosing? (Y/N) ");
+            string reply = Console.ReadLine();
+            while (reply != "Y" && reply != "N")
+            {
+                Console.Write("Wrong input, try again! ");
+                reply = Console.ReadLine();
+            }
+            if (reply == "Y")
+            {
+                Console.WriteLine($"LISTING {x.ToUpper()}'S");
+                List(x);
+            }
+            int id;
+            Console.WriteLine("First enter the ID of the entity you want to update. If it is a valid ID, the properties of it will be listed." +
+                "\nPut '-' to each property you dont want to change. If you do, enter the value.");
+            Console.Write("Enter the choosen ID: ");
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.Write("Please enter a valid integer for ID: ");
+            }
+            switch (x)
+            {
+                case "firestation":
+                    try
+                    {
+                        Console.WriteLine("-LISTING THE CHOOSEN ENTITY-");
+                        var changing = rest.Get<FireStation>(id, "firestation");
+                        Console.WriteLine(changing);
+                        FireStation fs = new FireStation() { Id = id };
+                        foreach (var property in typeof(FireStation).GetProperties().Where(t => t.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null && t.Name != "Id")) //Listing every property thats not virtual, nor the id
+                        {
+                            Console.Write(property.Name + ":");
+                            if (property.PropertyType == typeof(int)) //if the property is an integer
+                            {
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && !int.TryParse(s, out set)) //if the input cant be converted to int
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set)) //ask for new input until it is a valid integer
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    property.SetValue(fs, set);
+                                }
+                                else if (s != "-") //set
+                                {
+                                    property.SetValue(fs, int.Parse(s));
+                                }
+                                else //skip, so set the original value
+                                {
+                                    property.SetValue(fs, property.GetValue(changing));
+                                }
+                                
+                            }
+                            else
+                            {
+                                string re = Console.ReadLine();
+                                while (re == string.Empty) //avoiding exception by not accepting empty string
+                                {
+                                    Console.Write("Please give a valid input. ");
+                                    re = Console.ReadLine();
+                                }
+                                if (re != "-") //set
+                                {
+                                    if (property.GetValue(fs) != re) //seeing if the 
+                                    {
+                                        property.SetValue(fs, re);
+                                    }
+                                }
+                                else //skip, so setting the original value
+                                {
+                                    property.SetValue(fs, property.GetValue(changing));
+                                }
+                            }
+                            
+                        }
+                        rest.Put(fs, "firestation");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+                case "firefighter":
+                    try
+                    {
+                        Console.WriteLine("-LISTING THE CHOOSEN ENTITY-");
+                        var changing = rest.Get<Firefighter>(id, "firefighter");
+                        Console.WriteLine(changing);
+                        Firefighter ff = new Firefighter() { Id = id };
+                        foreach (var property in typeof(Firefighter).GetProperties().Where(t => t.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null && t.Name != "Id"))
+                        {
+                            Console.Write(property.Name + ":");
+                            if (property.PropertyType == typeof(int))
+                            {
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && !int.TryParse(s, out set))
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    property.SetValue(ff, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(ff, int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(ff, property.GetValue(changing));
+                                }
+
+                            }
+                            else
+                            {
+                                string re = Console.ReadLine();
+                                while (re == string.Empty)
+                                {
+                                    Console.Write("Please give a valid input. ");
+                                    re = Console.ReadLine();
+                                }
+                                if (re != "-")
+                                {
+                                    if (property.GetValue(ff) != re)
+                                    {
+                                        property.SetValue(ff, re);
+                                    }
+                                }
+                                else
+                                {
+                                    property.SetValue(ff, property.GetValue(changing));
+                                }
+                            }
+
+                        }
+                        rest.Put(ff, "firefighter");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+                case "equipment":
+                    try
+                    {
+                        Console.WriteLine("-LISTING THE CHOOSEN ENTITY-");
+                        var changing = rest.Get<Equipment>(id, "equipment");
+                        Console.WriteLine(changing);
+                        Equipment eq = new Equipment() { Id = id };
+                        foreach (var property in typeof(Equipment).GetProperties().Where(t => t.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null && t.Name != "Id"))
+                        {
+                            Console.Write(property.Name + ":");
+                            if (property.PropertyType == typeof(int))
+                            {
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && !int.TryParse(s, out set))
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    property.SetValue(eq, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(eq, int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(eq, property.GetValue(changing));
+                                }
+
+                            }
+                            else if (property.PropertyType == typeof(EquipmentCondition))
+                            {
+                                Console.WriteLine();
+                                ListIncidentTypes("equipment");
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && (!int.TryParse(s, out set) || int.Parse(s) <0 || int.Parse(s) > 4))
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    while (set <0 || set > 4)
+                                    {
+                                        Console.WriteLine("Please give a number between 0 and 4");
+                                        set = int.Parse(Console.ReadLine());
+                                    }
+                                    property.SetValue(eq, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(eq, (EquipmentCondition)int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(eq, property.GetValue(changing));
+                                }
+                            }
+                            else
+                            {
+                                string re = Console.ReadLine();
+                                while (re == string.Empty)
+                                {
+                                    Console.Write("Please give a valid input. ");
+                                    re = Console.ReadLine();
+                                }
+                                if (re != "-")
+                                {
+                                    if (property.GetValue(eq) != re)
+                                    {
+                                        property.SetValue(eq, re);
+                                    }
+                                }
+                                else
+                                {
+                                    property.SetValue(eq, property.GetValue(changing));
+                                }
+                            }
+
+                        }
+                        rest.Put(eq, "equipment");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+                case "emergencycall": //DATE NEED TO BE IMPLEMENTED
+                    try
+                    {
+                        Console.WriteLine("-LISTING THE CHOOSEN ENTITY-");
+                        var changing = rest.Get<EmergencyCall>(id, "emergencycall");
+                        Console.WriteLine(changing);
+                        EmergencyCall ec = new EmergencyCall() { Id = id };
+                        foreach (var property in typeof(EmergencyCall).GetProperties().Where(t => t.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null && t.Name != "Id"))
+                        {
+                            Console.Write(property.Name + ":");
+                            if (property.PropertyType == typeof(int))
+                            {
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && !int.TryParse(s, out set))
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    property.SetValue(ec, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(ec, int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(ec, property.GetValue(changing));
+                                }
+
+                            }
+                            else if (property.PropertyType == typeof(IncidentType))
+                            {
+                                Console.WriteLine();
+                                ListIncidentTypes("incident");
+                                int set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && (!int.TryParse(s, out set) || int.Parse(s) < 0 || int.Parse(s) > 6))
+                                {
+                                    Console.Write("Please enter a valid integer.");
+                                    while (!int.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid integer.");
+                                    }
+                                    while (set < 0 || set > 6)
+                                    {
+                                        Console.WriteLine("Please give a number between 0 and 6");
+                                        set = int.Parse(Console.ReadLine());
+                                    }
+                                    property.SetValue(ec, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(ec, (IncidentType)int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(ec, property.GetValue(changing));
+                                }
+                            }
+                            else
+                            {
+                                string re = Console.ReadLine();
+                                while (re == string.Empty)
+                                {
+                                    Console.Write("Please give a valid input. ");
+                                    re = Console.ReadLine();
+                                }
+                                if (re != "-")
+                                {
+                                    if (property.GetValue(ec) != re)
+                                    {
+                                        property.SetValue(ec, re);
+                                    }
+                                }
+                                else
+                                {
+                                    property.SetValue(ec, property.GetValue(changing));
+                                }
+                            }
+
+                        }
+                        rest.Put(ec, "emergencycall");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.ReadLine();
+                    break;
+            }
         }
 
         static void Delete(string x)
         {
-            int id = int.Parse(Console.ReadLine());
-            rest.Delete(id,"");
+            Console.Write($"Would you like to list the {x}s before choosing? (Y/N) ");
+            string reply = Console.ReadLine();
+            while (reply != "Y" && reply != "N")
+            {
+                Console.Write("Wrong input, try again! ");
+                reply = Console.ReadLine();
+            }
+            if (reply == "Y")
+            {
+                Console.WriteLine($"LISTING {x.ToUpper()}'S");
+                List(x);
+            }
+            int id;
+            Console.Write("Enter the choosen ID: ");
+            while (!int.TryParse(Console.ReadLine(),out id))
+            {
+                Console.Write("Please enter a valid integer for ID: ");
+            }
+            switch (x)
+            {
+                case "firestation":
+                    try
+                    {
+                        rest.Delete(id, "firestation");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    break;
+                case "firefighter":
+                    try
+                    {
+                        rest.Delete(id, "firefighter");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    break;
+                case "equipment":
+                    try
+                    {
+                        rest.Delete(id, "equipment");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    break;
+                case "emergencycall":
+                    try
+                    {
+                        rest.Delete(id, "emergencycall");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    Console.WriteLine("Press enter to continue...");
+                    Console.ReadLine();
+                    break;
+            }
         }
         static void HowManyFirefightersByStation()
         {
@@ -450,7 +849,7 @@ namespace CM79D3_HFT_2023241.Client
         }
         static void Main(string[] args)
         {
-            rest = new RestService("http://localhost:26947/","firestation"); 
+            rest = new RestService("http://localhost:5000/","firestation"); 
             var firestationSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("GetByID", () => ListOne("firestation"))
                 .Add("List", () => List("firestation"))
