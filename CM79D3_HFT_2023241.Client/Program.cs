@@ -614,7 +614,7 @@ namespace CM79D3_HFT_2023241.Client
                     }
                     Console.ReadLine();
                     break;
-                case "emergencycall": //DATE NEED TO BE IMPLEMENTED
+                case "emergencycall": 
                     try
                     {
                         Console.WriteLine("-LISTING THE CHOOSEN ENTITY-");
@@ -634,6 +634,29 @@ namespace CM79D3_HFT_2023241.Client
                                     while (!int.TryParse(Console.ReadLine(), out set))
                                     {
                                         Console.Write("Please enter a valid integer.");
+                                    }
+                                    property.SetValue(ec, set);
+                                }
+                                else if (s != "-")
+                                {
+                                    property.SetValue(ec, int.Parse(s));
+                                }
+                                else
+                                {
+                                    property.SetValue(ec, property.GetValue(changing));
+                                }
+
+                            }
+                            else if (property.PropertyType == typeof(DateTime))
+                            {
+                                DateTime set;
+                                string s = Console.ReadLine();
+                                if (s != "-" && !DateTime.TryParse(s, out set))
+                                {
+                                    Console.Write("Please enter a valid DateTime (YYYY.MM.DD)");
+                                    while (!DateTime.TryParse(Console.ReadLine(), out set))
+                                    {
+                                        Console.Write("Please enter a valid DateTime. (YYYY.MM.DD)");
                                     }
                                     property.SetValue(ec, set);
                                 }
