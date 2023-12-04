@@ -28,6 +28,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
 
         public void Delete(int id)
         {
+            this.Read(id);
             this.repo.Delete(id);
         }
 

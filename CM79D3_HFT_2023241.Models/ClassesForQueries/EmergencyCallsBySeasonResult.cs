@@ -7,7 +7,7 @@ namespace CM79D3_HFT_2023241.Models.ClassesForQueries
     {
         public string Season { get; set; }
         public string FireStation { get; set; }
-        public List<EmergencyCall> EmergencyCalls { get; set; }
+        public IEnumerable<EmergencyCall> EmergencyCalls { get; set; }
         public override bool Equals(object obj)
         {
             bool re = true;

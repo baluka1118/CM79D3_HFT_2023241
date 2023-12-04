@@ -21,19 +21,19 @@ namespace CM79D3_HFT_2023241.Endpoint.Controllers
             this.fflogic = fflogic;
         }
         [HttpGet]
-        public IEnumerable<KeyValuePair<string, int>> HowManyFirefightersByStation()
+        public IEnumerable<FireStationWithFirefighterCount> HowManyFirefightersByStation()
         {
             return fslogic.HowManyFirefightersByStation();
         }
 
         [HttpGet]
-        public IEnumerable<KeyValuePair<string, Dictionary<IncidentType, int>>> EmergencyCallsCountByStationAndType()
+        public IEnumerable<FireStationWithEmergencyCallCountByType> EmergencyCallsCountByStationAndType()
         {
             return fslogic.EmergencyCallsCountByStationAndType();
         }
 
         [HttpGet]
-        public IEnumerable<KeyValuePair<string, Dictionary<string, int>>> RankDistribution()
+        public IEnumerable<FireStationWithRankDistribution> RankDistribution()
         {
             return fslogic.RankDistribution();
         }

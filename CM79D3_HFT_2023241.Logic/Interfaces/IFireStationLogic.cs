@@ -16,9 +16,9 @@ namespace CM79D3_HFT_2023241.Logic.Interfaces
         void Create(FireStation item);
         void Update(FireStation item);
         void Delete(int id);
-        public IEnumerable<KeyValuePair<string, int>> HowManyFirefightersByStation();
-        public IEnumerable<KeyValuePair<string, Dictionary<string, int>>> RankDistribution();
-        public IEnumerable<KeyValuePair<string, Dictionary<IncidentType, int>>> EmergencyCallsCountByStationAndType();
+        public IEnumerable<FireStationWithFirefighterCount> HowManyFirefightersByStation();
+        public IEnumerable<FireStationWithRankDistribution> RankDistribution();
+        public IEnumerable<FireStationWithEmergencyCallCountByType> EmergencyCallsCountByStationAndType();
         public IEnumerable<EmergencyCallsBySeasonResult> EmergencyCallsBySeason();
 
     }

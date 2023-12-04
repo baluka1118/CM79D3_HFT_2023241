@@ -571,7 +571,10 @@ namespace CM79D3_HFT_2023241.Client
                                     while (set <0 || set > 4)
                                     {
                                         Console.WriteLine("Please give a number between 0 and 4");
-                                        set = int.Parse(Console.ReadLine());
+                                        while (!int.TryParse(Console.ReadLine(), out set))
+                                        {
+                                            Console.Write("Please enter a valid integer.");
+                                        }
                                     }
                                     property.SetValue(eq, set);
                                 }
@@ -686,7 +689,10 @@ namespace CM79D3_HFT_2023241.Client
                                     while (set < 0 || set > 6)
                                     {
                                         Console.WriteLine("Please give a number between 0 and 6");
-                                        set = int.Parse(Console.ReadLine());
+                                        while(!int.TryParse(Console.ReadLine(), out set))
+                                        {
+                                            Console.Write("Please enter a valid integer.");
+                                        }
                                     }
                                     property.SetValue(ec, set);
                                 }
@@ -807,10 +813,10 @@ namespace CM79D3_HFT_2023241.Client
         static void HowManyFirefightersByStation()
         {
             Console.WriteLine("Count of Firefighters per station:");
-            var result = rest.Get<KeyValuePair<string,int>>("stat/howmanyfirefightersbystation");
+            var result = rest.Get<FireStationWithFirefighterCount>("stat/howmanyfirefightersbystation");
             foreach (var x in result)
             {
-                Console.WriteLine("Station: " + x.Key + " Firefighters: " + x.Value);
+                Console.WriteLine("Station: " + x.Name + "|| Firefighters: " + x.FirefighterCount);
             }
             Console.ReadLine();
         }
@@ -818,13 +824,13 @@ namespace CM79D3_HFT_2023241.Client
         static void EmergencyCallsCountByStationAndType()
         {
             Console.WriteLine("Count of EmergencyCalls per station and type:");
-            var result = rest.Get<KeyValuePair<string, Dictionary<IncidentType, int>>>("stat/emergencycallscountbystationandtype");
+            var result = rest.Get<FireStationWithEmergencyCallCountByType>("stat/emergencycallscountbystationandtype");
             foreach (var x in result)
             {
-                Console.WriteLine("Station: " + x.Key);
-                foreach (var y in x.Value)
+                Console.WriteLine("Station: " + x.Name);
+                foreach (var y in x.EmergencyCallCounts)
                 {
-                    Console.WriteLine("\tIncidentType: " + y.Key + " Count: " + y.Value);
+                    Console.WriteLine("\tIncidentType: " + y.IncidentType + " Count: " + y.Count);
                 }
             }
             Console.ReadLine();
@@ -833,13 +839,13 @@ namespace CM79D3_HFT_2023241.Client
         static void RankDistribution()
         {
             Console.WriteLine("Distribution of ranks in the Fire Stations:");
-            var result = rest.Get<KeyValuePair<string, Dictionary<string, int>>>("stat/rankdistribution");
+            var result = rest.Get<FireStationWithRankDistribution>("stat/rankdistribution");
             foreach (var x in result)
             {
-                Console.WriteLine("Station: " + x.Key);
-                foreach (var y in x.Value)
+                Console.WriteLine("Station: " + x.Name);
+                foreach (var y in x.RankDistribution)
                 {
-                    Console.WriteLine("\tRank: " + y.Key + " Count: " + y.Value);
+                    Console.WriteLine("\tRank: " + y.Rank + " Count: " + y.Count);
                 }
             }
             Console.ReadLine();
@@ -851,9 +857,10 @@ namespace CM79D3_HFT_2023241.Client
             var result = rest.Get<EmergencyCallsBySeasonResult>("stat/emergencycallsbyseason");
             foreach (var x in result)
             {
-                Console.WriteLine(x.Season.ToUpper() + $":\n{x.FireStation}'s Emergency Calls:");
+                Console.WriteLine(x.Season.ToUpper() + $":\n{x.FireStation}'s Emergency Calls:\n");
                 foreach (var VARIABLE in x.EmergencyCalls)
                 {
+                    Console.WriteLine("--EMERGENCY CALL--");
                     Console.WriteLine("\n" + VARIABLE + "\n");
                 }
             }
@@ -872,7 +879,7 @@ namespace CM79D3_HFT_2023241.Client
         }
         static void Main(string[] args)
         {
-            rest = new RestService("http://localhost:5000/","firestation"); 
+            rest = new RestService("http://localhost:26947/", "firestation"); 
             var firestationSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("GetByID", () => ListOne("firestation"))
                 .Add("List", () => List("firestation"))
