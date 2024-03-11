@@ -27,10 +27,14 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
             }
         }
-        public ICommand EmergencyCallCommand { get; set; }
+        
+        public ICommand EmergencyCallNavigate { get; set; }
+        public ICommand FireStationNavigate { get; set; }
+        public ICommand FirefighterNavigate { get; set; }
+        public ICommand EquipmentNavigate { get; set; }
         public MainWindowViewModel()
         {
-            EmergencyCallCommand = new RelayCommand(() =>
+            EmergencyCallNavigate = new RelayCommand(() =>
             {
                 CurrentControl = new EmergencyCallView();
             });
