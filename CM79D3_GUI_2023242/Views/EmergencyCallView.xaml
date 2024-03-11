@@ -4,9 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views"
+             xmlns:vms="clr-namespace:CM79D3_GUI_2023242.WpfClient.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vms:EmergencyCallViewModel></vms:EmergencyCallViewModel>
+    </UserControl.DataContext>
     <Grid>
-            
+        <ListBox ItemsSource="{Binding EmergencyCalls}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding CallerName}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

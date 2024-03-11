@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CM79D3_GUI_2023242.WpfClient;
+using CM79D3_HFT_2023241.Models;
 
 namespace CM79D3_GUI_2023242
 {
