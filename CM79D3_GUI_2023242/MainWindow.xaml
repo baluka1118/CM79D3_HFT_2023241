@@ -10,7 +10,57 @@
     <Window.DataContext>
         <vms:MainWindowViewModel></vms:MainWindowViewModel>
     </Window.DataContext>
+
     <Grid>
-        <UserControl Content="{Binding CurrentControl}"></UserControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="2">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Black" BorderThickness="0,0,2,0">
+                    <Image HorizontalAlignment="Left">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Images/deplogo.webp"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+                <TextBlock Padding="5,0,0,0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Impact" FontSize="25" Text="Fire Department Managing System"/>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Command="{Binding FireStationNavigate}">
+                        <Grid>
+                            <Image Source="Images/firestation.png" HorizontalAlignment="Stretch" Stretch="Uniform" VerticalAlignment="Stretch"></Image>
+                        </Grid>
+                    </Button>
+                    <Button Grid.Column="1" Command="{Binding FirefighterNavigate}">
+                        <Grid>
+                            <Image Source="Images/firefighter.png"></Image>
+                        </Grid>
+                    </Button>
+                    <Button Grid.Column="2" Command="{Binding EquipmentNavigate}">
+                        <Grid>
+                            <Image Source="Images/firehose.png"></Image>
+                        </Grid>
+                    </Button>
+                    <Button Grid.Column="3" Command="{Binding EmergencyCallNavigate}">
+                        <Grid>
+                            <Image Source="Images/emergencycall.png"></Image>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+        <UserControl Grid.Row="1" Content="{Binding CurrentControl}"/>
     </Grid>
 </Window>

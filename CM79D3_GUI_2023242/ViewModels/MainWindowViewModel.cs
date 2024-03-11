@@ -27,16 +27,37 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
             }
         }
-        
+
+        private EmergencyCallView emergencyCallView;
+        private EquipmentView equipmentView;
+        private FirefighterView firefighterView;
+        private FireStationView fireStationView;
         public ICommand EmergencyCallNavigate { get; set; }
         public ICommand FireStationNavigate { get; set; }
         public ICommand FirefighterNavigate { get; set; }
         public ICommand EquipmentNavigate { get; set; }
         public MainWindowViewModel()
         {
+            CurrentControl = new WelcomeView();
+            emergencyCallView = new EmergencyCallView();
+            equipmentView = new EquipmentView();
+            firefighterView = new FirefighterView();
+            fireStationView = new FireStationView();
             EmergencyCallNavigate = new RelayCommand(() =>
             {
-                CurrentControl = new EmergencyCallView();
+                CurrentControl = emergencyCallView;
+            });
+            FireStationNavigate = new RelayCommand(() =>
+            {
+                CurrentControl = fireStationView;
+            });
+            FirefighterNavigate = new RelayCommand(() =>
+            {
+                CurrentControl = firefighterView;
+            });
+            EquipmentNavigate = new RelayCommand(() =>
+            {
+                CurrentControl = equipmentView;
             });
         }
     }

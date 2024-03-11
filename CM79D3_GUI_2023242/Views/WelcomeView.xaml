@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="CM79D3_GUI_2023242.WpfClient.Views.WelcomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <TextBlock FontSize="18"  FontFamily="Times New Roman" TextWrapping="Wrap">
+            <TextBlock FontSize="22" FontFamily="Times New Roman" FontWeight="DemiBold">Üdvözöljük a Fire Department Management System-ben! </TextBlock>
+            <LineBreak/>
+            Ez a rendszer segítséget nyújt a tűzoltóságok hatékonyabb és szervezettebb működéséhez. Kérjük, válasszon egyet a felsorolt opciók közül a felső menüből, hogy elkezdhesse a tevékenységeit.
+            <LineBreak/>
+            Az opciók balról jobbra: <TextBlock FontSize="18" FontFamily="Times New Roman" TextWrapping="Wrap" FontStyle="Italic" FontWeight="Bold" Foreground="Red">Fire Stations, Firefighters, Equipments, Emergency Calls </TextBlock>
+            <LineBreak/>
+            Biztonságos és eredményes munkát kívánunk Önnek!
+        </TextBlock>
+    </Grid>
+</UserControl>

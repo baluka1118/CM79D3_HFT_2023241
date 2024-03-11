@@ -8,13 +8,51 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Controlled_Burn_CRG.gif" />
+    <None Remove="Images\deplogo.webp" />
+    <None Remove="Images\emergencycall.png" />
+    <None Remove="Images\fire.gif" />
+    <None Remove="Images\firefighter.png" />
+    <None Remove="Images\firehose.png" />
+    <None Remove="Images\firestation.png" />
+    <None Remove="Images\phone.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.2" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CM79D3_HFT_2023241.Models\CM79D3_HFT_2023241.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Controlled_Burn_CRG.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\deplogo.webp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\emergencycall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\fire.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\firefighter.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\firehose.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\firestation.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\phone.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
