@@ -18,6 +18,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public EmergencyCallViewModel()
         {
             EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "emergencycall");
+            UpdateCommand = new RelayCommand(Update);
         }
         private EmergencyCall selectedItem;
         public EmergencyCall SelectedItem
@@ -42,6 +43,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
         private void Update()
         {
+            MessageBox.Show("Update");
         }
     }
 }
