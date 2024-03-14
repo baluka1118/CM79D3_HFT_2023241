@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding Equipments}"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Equipments}"
               AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Id">

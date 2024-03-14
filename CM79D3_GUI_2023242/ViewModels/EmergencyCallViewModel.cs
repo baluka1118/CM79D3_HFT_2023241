@@ -19,6 +19,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         {
             EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "emergencycall");
             UpdateCommand = new RelayCommand(Update);
+            DeleteCommand = new RelayCommand(Delete);
         }
         private EmergencyCall selectedItem;
         public EmergencyCall SelectedItem
@@ -37,6 +38,14 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public RelayCommand DeleteCommand { get; set; }
         private void Delete()
         {
+            try
+            {
+                EmergencyCalls.Delete(SelectedItem.Id);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("ERROR", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public RelayCommand UpdateCommand { get; set; }

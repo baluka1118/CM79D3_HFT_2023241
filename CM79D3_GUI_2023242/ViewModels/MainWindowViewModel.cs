@@ -65,10 +65,9 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             {
                 CurrentControl = welcomeView;
             });
+
+
         }
         public ICommand NavigateBack { get; set; }
-        private void PerformNavigateBack()
-        {
-        }
     }
 }
