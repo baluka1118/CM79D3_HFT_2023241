@@ -34,7 +34,6 @@ namespace CM79D3_HFT_2023241.Models
         [ForeignKey(nameof(Firefighter))]
         public int Firefighter_ID { get; set; }
         [NotMapped]
-        [JsonIgnore]
         public virtual Firefighter Firefighter { get; set; }
         public Equipment()
         {

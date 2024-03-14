@@ -45,7 +45,6 @@ namespace CM79D3_HFT_2023241.Models
         [ForeignKey(nameof(FireStation))]
         public int FireStation_ID { get; set; }
         [NotMapped]
-        [JsonIgnore]
         public virtual FireStation FireStation { get; set; }
         public EmergencyCall()
         {

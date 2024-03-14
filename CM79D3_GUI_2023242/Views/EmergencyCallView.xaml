@@ -12,63 +12,69 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition  Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" IsReadOnly="True" ItemsSource="{Binding EmergencyCalls}"
+        <DataGrid Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding EmergencyCalls}"
                   AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Id">
+                <DataGridTemplateColumn Header="Id" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Id}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Caller's Name">
+                <DataGridTemplateColumn Header="Caller's Name" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding CallerName}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Caller's Phone">
+                <DataGridTemplateColumn Header="Caller's Phone" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding CallerPhone}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Location">
+                <DataGridTemplateColumn Header="Location" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding IncidentLocation}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Incident Type">
+                <DataGridTemplateColumn Header="Incident Type" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding IncidentType}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Date">
+                <DataGridTemplateColumn Header="Date" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DateTime, StringFormat=yyyy-MM-dd}"></TextBlock>
-                            <!--better form needed-->
+                            <TextBlock Text="{Binding DateTime}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Update">
+                <DataGridTemplateColumn Header="Station" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FireStation.Name}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Update" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Update" Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Delete">
+                <DataGridTemplateColumn Header="Delete" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -77,21 +83,28 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="0" MaxHeight="30">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button Height="50" Width="50" HorizontalAlignment="Left" Grid.Column="0" Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                <Path Data="M0.5,0 L0.5,1 M0,0.5 L1,0.5"
-                    StrokeThickness="4"
-                    Stretch="Fill"
-                    Stroke="Green" />
-            </Button>
-            <Viewbox Grid.Column="1" Grid.Row="0" MaxHeight="40">
+
+            <Viewbox Grid.Column="1">
+                <Button HorizontalAlignment="Left" Grid.Column="0" Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="25" Data="M0.5,0 L0.5,1 M0,0.5 L1,0.5"
+            StrokeThickness="4"
+            Stretch="Fill"
+            Stroke="Green" />
+                        <Label Margin="10,0,10,0" Content="Add Emergency Call" Foreground="Green" FontFamily="Times New Roman" />
+                    </StackPanel>
+                </Button>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="0" MaxHeight="40" HorizontalAlignment="Left" >
                 <TextBlock Margin="10,0,10,0" Text="Emergency Call Management" FontFamily="Times New Roman" FontWeight="Bold"/>
             </Viewbox>
         </Grid>
-        
+
     </Grid>
 </UserControl>

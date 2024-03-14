@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient"
         xmlns:vms="clr-namespace:CM79D3_GUI_2023242.WpfClient.ViewModels"
         mc:Ignorable="d"
-        Title="Management System" Height="450" Width="800">
+        Title="Management System" Height="450" Width="800" MinWidth="800" MinHeight="450">
     <Window.DataContext>
         <vms:MainWindowViewModel></vms:MainWindowViewModel>
     </Window.DataContext>
@@ -23,15 +23,17 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border BorderBrush="Black" BorderThickness="0,0,2,0">
-                    <Image HorizontalAlignment="Left">
-                        <Image.Source>
-                            <BitmapImage UriSource="/Images/deplogo.webp"/>
-                        </Image.Source>
-                    </Image>
-                </Border>
+                <Button Grid.Column="0" Command="{Binding NavigateBack}" Style="{StaticResource ResourceKey=TopMenu}">
+                    <Grid>
+                        <Image HorizontalAlignment="Left">
+                            <Image.Source>
+                                <BitmapImage UriSource="/Images/deplogo.webp"/>
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+                </Button>
                 <Viewbox Grid.Row="0" Grid.Column="1">
-                    <TextBlock Margin="10,0,10,0" Text="Fire Department Managing System" FontFamily="Impact" />
+                    <TextBlock Margin="10,0,10,0" Text="Fire Department Management System" FontFamily="Impact" />
                 </Viewbox>
                 
                 <Grid Grid.Column="2">

@@ -29,8 +29,10 @@ namespace CM79D3_HFT_2023241.Models
         [ToString]
         public string ContactInformation { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Firefighter> Firefighters { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<EmergencyCall> EmergencyCalls { get; set; }
         public FireStation()
         {
