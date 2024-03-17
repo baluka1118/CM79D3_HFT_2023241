@@ -9,16 +9,57 @@ using System.Windows;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
+using CM79D3_GUI_2023242.WpfClient.Services;
+using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 {
     class EmergencyCallViewModel : ObservableRecipient
     {
         public RestCollection<EmergencyCall> EmergencyCalls { get; set; }
+        private IEmergencyCallEditor editor;
         public EmergencyCallViewModel()
         {
+            
             EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "emergencycall");
-            UpdateCommand = new RelayCommand(Update);
+            if (editor == null)
+            {
+                editor = new EmergencyCallEditorViaWindow(); //Ioc throws exception
+            }
+            AddCommand = new RelayCommand(async () =>
+            {
+                 var ec = new EmergencyCall();
+                 ec.DateTime = DateTime.Now;
+                 if (!editor.Add(ec))
+                 {
+                     return;
+                 }
+
+                 try
+                 {
+                    await EmergencyCalls.Add(ec);
+                 }
+                 catch (Exception e)
+                 {
+                     MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                 }
+            }, () => true);
+            UpdateCommand = new RelayCommand(async () =>
+            {
+                if (!editor.Update(SelectedItem))
+                {
+                    return;
+                }
+                try
+                {
+                    await EmergencyCalls.Update(SelectedItem);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
             DeleteCommand = new RelayCommand(Delete);
         }
         private EmergencyCall selectedItem;
@@ -27,14 +68,15 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             get { return selectedItem; }
             set
             {
-                SetProperty(ref selectedItem, value);
+                if (SetProperty(ref selectedItem, value))
+                {
+                    AddCommand.NotifyCanExecuteChanged();
+                    DeleteCommand.NotifyCanExecuteChanged();
+                    UpdateCommand.NotifyCanExecuteChanged();
+                }
             }
         }
         public RelayCommand AddCommand { get; set; }
-        private void Add()
-        {
-        }
-
         public RelayCommand DeleteCommand { get; set; }
         private void Delete()
         {
@@ -49,10 +91,5 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         }
 
         public RelayCommand UpdateCommand { get; set; }
-
-        private void Update()
-        {
-            MessageBox.Show("Update");
-        }
     }
 }

@@ -1,0 +1,41 @@
+﻿<Window x:Class="CM79D3_GUI_2023242.WpfClient.Views.Popups.EmergencyCallEditorPopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views.Popups"
+        mc:Ignorable="d"
+        Title="EmergencyCallEditorPopUp" Height="450" Width="300" Loaded="EmergencyCallEditorPopUp_OnLoaded">
+    <Grid x:Name="grid"> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Emergency Call" FontSize="16"  FontWeight="Bold"/>
+        <Label Grid.Row="1" Content="Caller's Name" Background="LightCoral"/>
+        <TextBox Grid.Row="2" Height="30" Text="{Binding EC.CallerName, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="3" Content="Caller's Phone" Background="LightCoral"/>
+        <TextBox Grid.Row="4" Height="30" Text="{Binding EC.CallerPhone, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="5" Content="Incident Location" Background="LightCoral"/>
+        <TextBox Grid.Row="6" Height="30" Text="{Binding EC.IncidentLocation, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="7" Content="Incident Type" Background="LightCoral"/>
+        <ComboBox x:Name="cbox" Grid.Row="8" SelectedItem="{Binding EC.IncidentType, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="9" Content="Date" Background="LightCoral"/>
+        <DatePicker Grid.Row="10" Height="30" SelectedDate="{Binding EC.DateTime, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="11" Content="Fire Station ID" Background="LightCoral"/>
+        <TextBox Grid.Row="12" Height="30" Text="{Binding EC.FireStation_ID, UpdateSourceTrigger=Explicit}"/>
+        <Button Grid.Row="13" Click="ButtonBase_OnClick" Content="Save"/>
+    </Grid>
+</Window>

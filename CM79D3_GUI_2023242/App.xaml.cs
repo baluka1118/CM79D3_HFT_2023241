@@ -5,6 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using CM79D3_GUI_2023242.WpfClient.Services;
+using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace CM79D3_GUI_2023242
 {
@@ -13,5 +17,12 @@ namespace CM79D3_GUI_2023242
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Ioc.Default.ConfigureServices(
+                new ServiceCollection()
+                    .AddSingleton<IEmergencyCallEditor, EmergencyCallEditorViaWindow>()
+                    .BuildServiceProvider());
+        }
     }
 }

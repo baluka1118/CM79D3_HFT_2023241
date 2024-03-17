@@ -284,21 +284,22 @@ namespace CM79D3_GUI_2023242.WpfClient
         RestService rest;
         List<T> items;
         bool hasSignalR;
-        Type type = typeof(T);
+        string endpoint;
 
         public RestCollection(string baseurl, string endpoint, string hub = null)
         {
+            this.endpoint = endpoint;
             hasSignalR = hub != null;
             this.rest = new RestService(baseurl, endpoint);
             if (hub != null)
             {
                 this.notify = new NotifyService(baseurl + hub);
-                this.notify.AddHandler<T>(type.Name + "Created", (T item) =>
+                this.notify.AddHandler<T>(endpoint + "Created", (T item) =>
                 {
                     items.Add(item);
                     CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 });
-                this.notify.AddHandler<T>(type.Name + "Deleted", (T item) =>
+                this.notify.AddHandler<T>(endpoint + "Deleted", (T item) =>
                 {
                     var element = items.FirstOrDefault(t => t.Equals(item));
                     if (element != null)
@@ -312,7 +313,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                     }
 
                 });
-                this.notify.AddHandler<T>(type.Name + "Updated", (T item) =>
+                this.notify.AddHandler<T>(endpoint + "Updated", (T item) =>
                 {
                     Init();
                 });
@@ -346,15 +347,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             else return new List<T>().GetEnumerator();
         }
 
-        public void Add(T item)
+        public async Task Add(T item)
         {
             if (hasSignalR)
             {
-                this.rest.PostAsync(item, typeof(T).Name);
+                await this.rest.PostAsync(item, endpoint);
             }
             else
             {
-                this.rest.PostAsync(item, typeof(T).Name).ContinueWith((t) =>
+                await this.rest.PostAsync(item, endpoint).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -368,15 +369,15 @@ namespace CM79D3_GUI_2023242.WpfClient
 
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
             if (hasSignalR)
             {
-                this.rest.PutAsync(item, typeof(T).Name);
+                await this.rest.PutAsync(item, endpoint);
             }
             else
             {
-                this.rest.PutAsync(item, typeof(T).Name).ContinueWith((t) =>
+                await this.rest.PutAsync(item, endpoint).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -393,11 +394,11 @@ namespace CM79D3_GUI_2023242.WpfClient
         {
             if (hasSignalR)
             {
-                this.rest.DeleteAsync(id, typeof(T).Name);
+                this.rest.DeleteAsync(id, endpoint);
             }
             else
             {
-                this.rest.DeleteAsync(id, typeof(T).Name).ContinueWith((t) =>
+                this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {

@@ -14,11 +14,9 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     class EquipmentViewModel : ObservableRecipient
     {
         public RestCollection<Equipment> Equipments { get; set; }
-        private UpdateEquipmentView updateView;
         public EquipmentViewModel()
         {
             Equipments = new RestCollection<Equipment>("http://localhost:26947/", "equipment");
-            UpdateCommand = new RelayCommand(Update);
             DeleteCommand = new RelayCommand(Delete);
 
         }
@@ -50,11 +48,5 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         }
 
         public RelayCommand UpdateCommand { get; set; }
-
-        private void Update()
-        {
-            updateView = new UpdateEquipmentView();
-            updateView.ShowDialog();
-        }
     }
 }
