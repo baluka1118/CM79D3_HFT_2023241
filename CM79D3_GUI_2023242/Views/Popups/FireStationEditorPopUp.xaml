@@ -1,0 +1,33 @@
+﻿<Window x:Class="CM79D3_GUI_2023242.WpfClient.Views.Popups.FireStationEditorPopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views.Popups"
+        mc:Ignorable="d"
+        Title="Fire Station Editor" Height="270" Width="300" MinHeight="270" MinWidth="300">
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Fire Station" FontSize="16"  FontWeight="Bold"/>
+        <Label Grid.Row="1" Content="Name" Background="LightCoral"/>
+        <TextBox Grid.Row="2" Height="30" Text="{Binding FS.Name, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="3" Content="Location" Background="LightCoral"/>
+        <TextBox Grid.Row="4" Height="30" Text="{Binding FS.Location, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="5" Content="Contact Information" Background="LightCoral"/>
+        <TextBox Grid.Row="6" Height="40" Text="{Binding FS.ContactInformation, UpdateSourceTrigger=Explicit}"/>
+        <Button Grid.Row="7" Click="ButtonBase_OnClick" Content="Save"/>
+    </Grid>
+</Window>

@@ -26,7 +26,7 @@ namespace CM79D3_HFT_2023241.Repository.ModelRepositories
             var old = Read(item.Id);
             foreach (var prop in old.GetType().GetProperties())
             {
-                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null && prop.Name != "FullName")
                 {
                     prop.SetValue(old, prop.GetValue(item));
                 }

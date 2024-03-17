@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views.Popups"
         mc:Ignorable="d"
-        Title="EmergencyCallEditorPopUp" Height="450" Width="300" Loaded="EmergencyCallEditorPopUp_OnLoaded">
+        Title="Emergency Call Editor" Height="450" Width="300" MinHeight="450" MinWidth="300" Loaded="EmergencyCallEditorPopUp_OnLoaded">
     <Grid x:Name="grid"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,17 +25,23 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Emergency Call" FontSize="16"  FontWeight="Bold"/>
         <Label Grid.Row="1" Content="Caller's Name" Background="LightCoral"/>
-        <TextBox Grid.Row="2" Height="30" Text="{Binding EC.CallerName, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="2"  Text="{Binding EC.CallerName, UpdateSourceTrigger=Explicit}"/>
         <Label Grid.Row="3" Content="Caller's Phone" Background="LightCoral"/>
-        <TextBox Grid.Row="4" Height="30" Text="{Binding EC.CallerPhone, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="4"  Text="{Binding EC.CallerPhone, UpdateSourceTrigger=Explicit}"/>
         <Label Grid.Row="5" Content="Incident Location" Background="LightCoral"/>
-        <TextBox Grid.Row="6" Height="30" Text="{Binding EC.IncidentLocation, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="6"  Text="{Binding EC.IncidentLocation, UpdateSourceTrigger=Explicit}"/>
         <Label Grid.Row="7" Content="Incident Type" Background="LightCoral"/>
         <ComboBox x:Name="cbox" Grid.Row="8" SelectedItem="{Binding EC.IncidentType, UpdateSourceTrigger=Explicit}"/>
         <Label Grid.Row="9" Content="Date" Background="LightCoral"/>
-        <DatePicker Grid.Row="10" Height="30" SelectedDate="{Binding EC.DateTime, UpdateSourceTrigger=Explicit}"/>
-        <Label Grid.Row="11" Content="Fire Station ID" Background="LightCoral"/>
-        <TextBox Grid.Row="12" Height="30" Text="{Binding EC.FireStation_ID, UpdateSourceTrigger=Explicit}"/>
+        <DatePicker Grid.Row="10" SelectedDate="{Binding EC.DateTime, UpdateSourceTrigger=Explicit}"/>
+        <Label Grid.Row="11" Content="Fire Station" Background="LightCoral"/>
+        <ComboBox Grid.Row="12" Height="30"  ItemsSource="{Binding FireStations}" SelectedItem="{Binding EC.FireStation, UpdateSourceTrigger=Explicit}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <Button Grid.Row="13" Click="ButtonBase_OnClick" Content="Save"/>
     </Grid>
 </Window>

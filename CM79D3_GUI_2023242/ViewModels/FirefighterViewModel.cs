@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using CM79D3_GUI_2023242.WpfClient.Services;
+using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,11 +15,58 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     class FirefighterViewModel : ObservableRecipient
     {
         public RestCollection<Firefighter> Firefighters { get; set; }
-
+        public IFirefighterEditor editor;
         public FirefighterViewModel()
         {
             Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "firefighter");
-            DeleteCommand = new RelayCommand(Delete);
+            if (editor == null)
+            {
+                editor = new FirefighterEditorViaWindow();
+            }
+            AddCommand = new RelayCommand(async () =>
+            {
+                var ff = new Firefighter();
+                if (!editor.Add(ff))
+                {
+                    return;
+                }
+
+                try
+                {
+                    await Firefighters.Add(ff);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+            UpdateCommand = new RelayCommand(async () =>
+            {
+                if (!editor.Update(SelectedItem))
+                {
+                    return;
+                }
+
+                try
+                {
+                    await Firefighters.Update(SelectedItem);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+            DeleteCommand = new RelayCommand(async () =>
+            {
+                try
+                {
+                    await Firefighters.Delete(SelectedItem.Id);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
         }
         private Firefighter selectedItem;
         public Firefighter SelectedItem
@@ -29,27 +78,13 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             }
         }
         public RelayCommand AddCommand { get; set; }
-        private void Add()
-        {
-        }
+
 
         public RelayCommand DeleteCommand { get; set; }
-        private void Delete()
-        {
-            try
-            {
-                Firefighters.Delete(SelectedItem.Id);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show("ERROR", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+
 
         public RelayCommand UpdateCommand { get; set; }
 
-        private void Update()
-        {
-        }
+
     }
 }

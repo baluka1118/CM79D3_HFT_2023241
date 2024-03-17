@@ -60,7 +60,17 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                     MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
-            DeleteCommand = new RelayCommand(Delete);
+            DeleteCommand = new RelayCommand(async () =>
+            {
+                try
+                {
+                    await EmergencyCalls.Delete(SelectedItem.Id);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
         }
         private EmergencyCall selectedItem;
         public EmergencyCall SelectedItem
@@ -68,27 +78,12 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             get { return selectedItem; }
             set
             {
-                if (SetProperty(ref selectedItem, value))
-                {
-                    AddCommand.NotifyCanExecuteChanged();
-                    DeleteCommand.NotifyCanExecuteChanged();
-                    UpdateCommand.NotifyCanExecuteChanged();
-                }
+                SetProperty(ref selectedItem, value);
             }
         }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
-        private void Delete()
-        {
-            try
-            {
-                EmergencyCalls.Delete(SelectedItem.Id);
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show("ERROR", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+
 
         public RelayCommand UpdateCommand { get; set; }
     }

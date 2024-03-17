@@ -20,7 +20,7 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         {
             if (item.CallerName == null || item.CallerName.Length > 50 || 
                 item?.CallerPhone?.Length > 50 || item.IncidentLocation == null || item.IncidentLocation.Length > 50
-                || !Enum.IsDefined(typeof(IncidentType),item.IncidentType) || item.DateTime == DateTime.MinValue 
+                || !Enum.IsDefined(typeof(IncidentType),item.IncidentType) || item.DateTime == DateTime.MinValue
                 || item.FireStation_ID == 0)
             {
                 throw new ArgumentException("The EmergencyCall isn't defined correctly.");

@@ -9,12 +9,12 @@ namespace CM79D3_GUI_2023242.WpfClient.Views.Popups.ViewModels
 {
     class ECPopUpViewModel
     {
-        public List<EmergencyCall> EmergencyCalls { get; set; } 
+        public List<FireStation> FireStations { get; set; } 
         public EmergencyCall EC { get; set; }
 
         public ECPopUpViewModel()
         {
-            EmergencyCalls = new RestService("http://localhost:26947/", "emergencycall").Get<EmergencyCall>("emergencycall");
+            FireStations = new RestService("http://localhost:26947/", "firestation").Get<FireStation>("firestation");
         }
         public void Init(EmergencyCall emergencyCall)
         {

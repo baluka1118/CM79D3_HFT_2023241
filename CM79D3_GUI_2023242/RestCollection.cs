@@ -390,15 +390,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             if (hasSignalR)
             {
-                this.rest.DeleteAsync(id, endpoint);
+                await this.rest.DeleteAsync(id, endpoint);
             }
             else
             {
-                this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
+                await this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {

@@ -17,16 +17,16 @@ using CM79D3_HFT_2023241.Models;
 namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
 {
     /// <summary>
-    /// Interaction logic for EmergencyCallEditorPopUp.xaml
+    /// Interaction logic for FirefighterEditorPopUp.xaml
     /// </summary>
-    public partial class EmergencyCallEditorPopUp : Window
+    public partial class FirefighterEditorPopUp : Window
     {
-        public EmergencyCallEditorPopUp(EmergencyCall emergencyCall)
+        public FirefighterEditorPopUp(Firefighter ff)
         {
             InitializeComponent();
-            var viewModel = new ECPopUpViewModel(); 
+            var viewModel = new FFPopUpViewModel();
             this.DataContext = viewModel;
-            viewModel.Init(emergencyCall);
+            viewModel.Init(ff);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -38,28 +38,17 @@ namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
                     tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                     continue;
                 }
-
-                if (item is DatePicker dp)
-                {
-                    dp.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
-                    continue;
-                }
                 if (item is ComboBox cb)
                 {
                     if (cb.SelectedItem is FireStation fs)
                     {
-                        (this.DataContext as ECPopUpViewModel).EC.FireStation_ID = fs.Id;
+                        (this.DataContext as FFPopUpViewModel).FF.FireStation_ID = fs.Id;
                         continue;
                     }
                     cb.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
                 }
             }
             this.DialogResult = true;
-        }
-
-        private void EmergencyCallEditorPopUp_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            cbox.ItemsSource = Enum.GetValues(typeof(IncidentType)).Cast<IncidentType>();
         }
     }
 }

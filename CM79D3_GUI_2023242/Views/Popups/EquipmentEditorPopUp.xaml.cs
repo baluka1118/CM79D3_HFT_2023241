@@ -17,16 +17,21 @@ using CM79D3_HFT_2023241.Models;
 namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
 {
     /// <summary>
-    /// Interaction logic for EmergencyCallEditorPopUp.xaml
+    /// Interaction logic for EquipmentEditorPopUp.xaml
     /// </summary>
-    public partial class EmergencyCallEditorPopUp : Window
+    public partial class EquipmentEditorPopUp : Window
     {
-        public EmergencyCallEditorPopUp(EmergencyCall emergencyCall)
+        public EquipmentEditorPopUp(Equipment equipment)
         {
             InitializeComponent();
-            var viewModel = new ECPopUpViewModel(); 
+            var viewModel = new EQPopUpViewModel();
             this.DataContext = viewModel;
-            viewModel.Init(emergencyCall);
+            viewModel.Init(equipment);
+        }
+
+        private void EquipmentEditorPopUp_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            cbox.ItemsSource = Enum.GetValues(typeof(EquipmentCondition)).Cast<EquipmentCondition>();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -38,28 +43,17 @@ namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
                     tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                     continue;
                 }
-
-                if (item is DatePicker dp)
-                {
-                    dp.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
-                    continue;
-                }
                 if (item is ComboBox cb)
                 {
-                    if (cb.SelectedItem is FireStation fs)
+                    if (cb.SelectedItem is Firefighter ff)
                     {
-                        (this.DataContext as ECPopUpViewModel).EC.FireStation_ID = fs.Id;
+                        (this.DataContext as EQPopUpViewModel).EQ.Firefighter_ID = ff.Id;
                         continue;
                     }
                     cb.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
                 }
             }
             this.DialogResult = true;
-        }
-
-        private void EmergencyCallEditorPopUp_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            cbox.ItemsSource = Enum.GetValues(typeof(IncidentType)).Cast<IncidentType>();
         }
     }
 }
