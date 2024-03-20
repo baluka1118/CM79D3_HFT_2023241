@@ -18,7 +18,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public IFirefighterEditor editor;
         public FirefighterViewModel()
         {
-            Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "firefighter");
+            Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "FireFighter", "hub");
             if (editor == null)
             {
                 editor = new FirefighterEditorViaWindow();
@@ -26,18 +26,18 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             AddCommand = new RelayCommand(async () =>
             {
                 var ff = new Firefighter();
-                if (!editor.Add(ff))
+                bool x = editor.Add(ff);
+                if (!x)
                 {
                     return;
                 }
-
                 try
                 {
                     await Firefighters.Add(ff);
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             UpdateCommand = new RelayCommand(async () =>
@@ -53,7 +53,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteCommand = new RelayCommand(async () =>
@@ -64,7 +64,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
@@ -84,7 +84,5 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
 
         public RelayCommand UpdateCommand { get; set; }
-
-
     }
 }

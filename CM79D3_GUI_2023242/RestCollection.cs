@@ -17,7 +17,7 @@ namespace CM79D3_GUI_2023242.WpfClient
     {
         HttpClient client;
 
-        public RestService(string baseurl, string pingableEndpoint = "firestation")
+        public RestService(string baseurl, string pingableEndpoint = "swagger")
         {
             bool isOk = false;
             do
@@ -255,6 +255,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                     throw new ArgumentException(response.StatusCode.ToString());
                 }
             }
+
             response.EnsureSuccessStatusCode();
         }
 
@@ -275,6 +276,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                     throw new ArgumentException(response.StatusCode.ToString());
                 }
             }
+
             response.EnsureSuccessStatusCode();
         }
 
@@ -314,7 +316,10 @@ namespace CM79D3_GUI_2023242.WpfClient
                 {
                     throw new ArgumentException(response.StatusCode.ToString());
                 }
+
             }
+
+
             response.EnsureSuccessStatusCode();
         }
 
@@ -378,6 +383,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                 {
                     items.Add(item);
                     CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    //Init();
                 });
                 this.notify.AddHandler<T>(endpoint + "Deleted", (T item) =>
                 {
@@ -391,7 +397,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                     {
                         Init();
                     }
-
+                    //Init();
                 });
                 this.notify.AddHandler<T>(endpoint + "Updated", (T item) =>
                 {
@@ -491,7 +497,5 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
 
         }
-
-
     }
 }

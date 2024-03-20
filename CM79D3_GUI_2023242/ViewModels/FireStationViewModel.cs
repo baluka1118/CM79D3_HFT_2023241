@@ -20,7 +20,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         private IFireStationEditor editor;
         public FireStationViewModel()
         {
-            FireStations = new RestCollection<FireStation>("http://localhost:26947/", "firestation");
+            FireStations = new RestCollection<FireStation>("http://localhost:26947/", "FireStation","hub");
             editor = new FireStationEditorViaWindow(); //ioc
             AddCommand = new RelayCommand(async () =>
             {
@@ -35,7 +35,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             UpdateCommand = new RelayCommand(async () =>
@@ -51,7 +51,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteCommand = new RelayCommand(async () =>
@@ -62,7 +62,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }

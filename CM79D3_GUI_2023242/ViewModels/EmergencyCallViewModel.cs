@@ -22,7 +22,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public EmergencyCallViewModel()
         {
             
-            EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "emergencycall");
+            EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "EmergencyCall", "hub");
             if (editor == null)
             {
                 editor = new EmergencyCallEditorViaWindow(); //Ioc throws exception
@@ -35,14 +35,13 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                  {
                      return;
                  }
-
                  try
                  {
                     await EmergencyCalls.Add(ec);
                  }
                  catch (Exception e)
                  {
-                     MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                     MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                  }
             }, () => true);
             UpdateCommand = new RelayCommand(async () =>
@@ -57,7 +56,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteCommand = new RelayCommand(async () =>
@@ -68,7 +67,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }

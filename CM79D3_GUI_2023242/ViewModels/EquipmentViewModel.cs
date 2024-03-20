@@ -18,7 +18,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         private IEquipmentEditor editor;
         public EquipmentViewModel()
         {
-            Equipments = new RestCollection<Equipment>("http://localhost:26947/", "equipment");
+            Equipments = new RestCollection<Equipment>("http://localhost:26947/", "Equipment", "hub");
             if (editor == null)
             {
                 editor = new EquipmentEditorViaWindow();
@@ -36,7 +36,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             UpdateCommand = new RelayCommand(async () =>
@@ -52,7 +52,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             DeleteCommand = new RelayCommand(async () =>
@@ -63,7 +63,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("ERROR", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
 

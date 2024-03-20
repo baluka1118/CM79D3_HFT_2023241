@@ -55,9 +55,9 @@ namespace CM79D3_HFT_2023241.Endpoint.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var EQToDelete = logic.Read(id);
             logic.Delete(id);
-            this.hub.Clients.All.SendAsync("EquipmentDeleted", value);
-
+            this.hub.Clients.All.SendAsync("EquipmentDeleted", EQToDelete);
         }
     }
 }
