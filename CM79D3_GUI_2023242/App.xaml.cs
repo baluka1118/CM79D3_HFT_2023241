@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using CM79D3_GUI_2023242.WpfClient.Services;
 using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace CM79D3_GUI_2023242
 {
@@ -22,6 +22,9 @@ namespace CM79D3_GUI_2023242
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                     .AddSingleton<IEmergencyCallEditor, EmergencyCallEditorViaWindow>()
+                    .AddSingleton<IFireStationEditor, FireStationEditorViaWindow>()
+                    .AddSingleton<IEquipmentEditor, EquipmentEditorViaWindow>()
+                    .AddSingleton<IFirefighterEditor, FirefighterEditorViaWindow>()
                     .BuildServiceProvider());
         }
     }

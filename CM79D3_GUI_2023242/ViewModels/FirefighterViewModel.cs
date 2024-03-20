@@ -8,6 +8,7 @@ using CM79D3_GUI_2023242.WpfClient.Services;
 using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CM79D3_GUI_2023242.WpfClient.ViewModels
@@ -21,7 +22,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "FireFighter", "hub");
             if (editor == null)
             {
-                editor = new FirefighterEditorViaWindow();
+                editor = Ioc.Default.GetService<IFirefighterEditor>();
             }
             AddCommand = new RelayCommand(async () =>
             {

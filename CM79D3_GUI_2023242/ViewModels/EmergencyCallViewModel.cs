@@ -25,7 +25,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             EmergencyCalls = new RestCollection<EmergencyCall>("http://localhost:26947/", "EmergencyCall", "hub");
             if (editor == null)
             {
-                editor = new EmergencyCallEditorViaWindow(); //Ioc throws exception
+                editor = Ioc.Default.GetService<IEmergencyCallEditor>();
             }
             AddCommand = new RelayCommand(async () =>
             {

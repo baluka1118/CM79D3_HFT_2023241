@@ -9,6 +9,7 @@ using CM79D3_GUI_2023242.WpfClient.Services;
 using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CM79D3_GUI_2023242.WpfClient.ViewModels
@@ -21,7 +22,10 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public FireStationViewModel()
         {
             FireStations = new RestCollection<FireStation>("http://localhost:26947/", "FireStation","hub");
-            editor = new FireStationEditorViaWindow(); //ioc
+            if (editor == null)
+            {
+                editor = Ioc.Default.GetService<IFireStationEditor>();
+            }
             AddCommand = new RelayCommand(async () =>
             {
                 var fs = new FireStation();

@@ -8,8 +8,8 @@ using CM79D3_GUI_2023242.WpfClient.Services;
 using CM79D3_GUI_2023242.WpfClient.Views.Popups;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-
 namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 {
     class EquipmentViewModel : ObservableRecipient
@@ -21,7 +21,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             Equipments = new RestCollection<Equipment>("http://localhost:26947/", "Equipment", "hub");
             if (editor == null)
             {
-                editor = new EquipmentEditorViaWindow();
+                editor = Ioc.Default.GetService<IEquipmentEditor>();
             }
             AddCommand = new RelayCommand(async () =>
             {
