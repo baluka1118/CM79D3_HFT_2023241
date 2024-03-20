@@ -70,8 +70,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return items;
         }
@@ -86,8 +93,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return items;
         }
@@ -102,8 +116,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return item;
         }
@@ -118,8 +139,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return item;
         }
@@ -134,8 +162,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return item;
         }
@@ -150,8 +185,15 @@ namespace CM79D3_GUI_2023242.WpfClient
             }
             else
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             return item;
         }
@@ -163,8 +205,15 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             response.EnsureSuccessStatusCode();
         }
@@ -176,8 +225,15 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
             response.EnsureSuccessStatusCode();
         }
@@ -189,10 +245,16 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
-
             response.EnsureSuccessStatusCode();
         }
 
@@ -203,10 +265,16 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
-
             response.EnsureSuccessStatusCode();
         }
 
@@ -217,10 +285,16 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadAsAsync<RestExceptionInfo>();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
-
             response.EnsureSuccessStatusCode();
         }
 
@@ -231,10 +305,16 @@ namespace CM79D3_GUI_2023242.WpfClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                    throw new ArgumentException(error.Msg);
+                }
+                else
+                {
+                    throw new ArgumentException(response.StatusCode.ToString());
+                }
             }
-
             response.EnsureSuccessStatusCode();
         }
 

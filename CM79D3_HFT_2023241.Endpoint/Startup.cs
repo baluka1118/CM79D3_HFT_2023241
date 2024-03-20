@@ -18,6 +18,7 @@ using CM79D3_HFT_2023241.Repository.Interfaces;
 using CM79D3_HFT_2023241.Repository.ModelRepositories;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using CM79D3_HFT_2023241.Endpoint.Services;
 
 namespace CM79D3_HFT_2023241.Endpoint
 {
@@ -43,6 +44,8 @@ namespace CM79D3_HFT_2023241.Endpoint
             services.AddTransient<IFirefighterLogic, FirefighterLogic>();
             services.AddTransient<IEquipmentLogic, EquipmentLogic>();
             services.AddTransient<IEmergencyCallLogic, EmergencyCallLogic>();
+
+            services.AddSignalR();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -74,6 +77,7 @@ namespace CM79D3_HFT_2023241.Endpoint
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<SignalRHub>("/hub");
                 endpoints.MapControllers();
             });
         }
