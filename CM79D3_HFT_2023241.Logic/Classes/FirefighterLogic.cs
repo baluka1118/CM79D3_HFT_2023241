@@ -28,6 +28,10 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public void Delete(int id)
         {
             this.Read(id);
+            if (repo.Read(id).Equipment.Count != 0)
+            {
+                throw new ArgumentException("The Firefighter still has equipment, therefore it cannot be deleted.");
+            }
             this.repo.Delete(id);
         }
 

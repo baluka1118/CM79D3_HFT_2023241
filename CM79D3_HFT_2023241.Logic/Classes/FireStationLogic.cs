@@ -32,6 +32,14 @@ namespace CM79D3_HFT_2023241.Logic.Classes
         public void Delete(int id)
         {
             this.Read(id); //throws argumentexception if station doesnt exist
+            if (repo.Read(id).Firefighters.Count != 0)
+            {
+                throw new ArgumentException("There are still firefighters stationed at this Fire Station, therefore it cannot be deleted.");
+            }
+            else if (repo.Read(id).EmergencyCalls.Count != 0)
+            {
+                throw new ArgumentException("There are still Emergency Calls that were made towards this Fire Station, therefore it cannot be deleted.");
+            }
             repo.Delete(id); 
         }
         public FireStation Read(int id)

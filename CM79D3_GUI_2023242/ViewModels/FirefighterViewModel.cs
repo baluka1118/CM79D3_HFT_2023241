@@ -19,7 +19,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
         public IFirefighterEditor editor;
         public FirefighterViewModel()
         {
-            Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "FireFighter", "hub");
+            Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "Firefighter","hub");
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IFirefighterEditor>();
