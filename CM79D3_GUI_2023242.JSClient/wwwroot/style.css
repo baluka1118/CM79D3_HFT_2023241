@@ -86,8 +86,23 @@ h1 {
         -moz-box-shadow: 0 6px 6px -6px #0E1119;
         box-shadow: 0 6px 6px -6px #0E1119;
     }
+/*    .container td:hover {
+        background-color: #ED2A00;
+        color: #403E10;
+        font-weight: bold;
+        box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+        transform: translate3d(6px, -6px, 0);
+        transition-delay: 0s;
+        transition-duration: 0.4s;
+        transition-property: all;
+    }*/
 
-    .container td:hover {
+    button{
+        padding: 20px;
+        
+        background-color: #ED2A00;
+    }
+    button:hover {
         background-color: #ED2A00;
         color: #403E10;
         font-weight: bold;
@@ -99,8 +114,7 @@ h1 {
     }
 
 @media (max-width: 800px) {
-    .container td:nth-child(4),
-    .container th:nth-child(4) {
+    .container td:nth-child(4), .container th:nth-child(4) {
         display: none;
     }
 }
