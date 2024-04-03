@@ -82,7 +82,6 @@ async function DisplayEmergencyCalls() {
         console.log(emergencycall.callerName);
     });
 }
-
 function showMainMenu() {
     clearResults();
     document.getElementById('MainMenu').style.display = 'block';
@@ -112,6 +111,10 @@ function showEmergencyCalls() {
     document.getElementById('EmergencyCallsTable').style.display = 'block';
 }
 
+function showAddFS() {
+    document.getElementById('FSAdd').style.display = 'block';
+}
+
 function clearResults() {
     document.getElementById('MainMenu').style.display = 'none';
     document.getElementById('FireStationsTable').style.display = 'none';
@@ -119,7 +122,38 @@ function clearResults() {
     document.getElementById('EquipmentsTable').style.display = 'none';
     document.getElementById('EmergencyCallsTable').style.display = 'none';
 }
-
+//--------------CRUD METHODS BELOW----------------
+function addFS() {
+    var inputName = document.getElementById('fsName').value;
+    var inputLocation = document.getElementById('fsLocation').value;
+    var inputContact = document.getElementById('fsContact').value;
+    fetch('http://localhost:26947/firestation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            { name: inputName, location: inputLocation, contactInformation: inputContact }
+        )
+    }).then(response => {
+        if (!response.ok) {
+            return response.json();
+        }
+    }).then(data => {
+        if (data != undefined) {
+            console.log(data);
+            if (data.msg != undefined) {
+                throw new Error(data.msg);
+            }
+            if (data.status != undefined && data.status != 200) {
+                throw new Error(data.title)
+            }
+        }
+    }).catch(error => {
+        console.error(error);
+        alert(error.message);
+    });
+    document.getElementById('FSAdd').style.display = 'none';
+    showFireStations();
+}
 function removeFS(id) {
     // Send a DELETE request to the server to remove the fire station with the given id
     fetch(`http://localhost:26947/firestation/${id}`, {
