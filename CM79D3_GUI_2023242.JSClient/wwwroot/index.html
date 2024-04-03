@@ -12,20 +12,74 @@
         <button onclick="showFirefighters()">Firefighters</button>
         <button onclick="showEquipments()">Equipments</button>
         <button onclick="showEmergencyCalls()">Emergency Calls</button>
-
     </div>
     <div id="FSAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new fire station below.</h3>
         <label for="fsName">Name:</label>
         <input type="text" id="fsName" name="fsName" required><br><br>
-            
+
         <label for="fsLocation">Location:</label>
         <input type="text" id="fsLocation" name="fsLocation" required><br><br>
-            
+
         <label for="fsContact">Contact Information:</label>
         <input type="text" id="fsContact" name="fsContact" required><br><br>
         <button type="submit" onclick="addFS()">Save</button>
     </div>
+    <div id="FFAdd" class="actionForm" style="display:none">
+        <h3 align="left">Create a new firefighter below.</h3>
+        <label for="ffFirstName">First Name:</label>
+        <input type="text" id="ffFirstName" name="ffFirstName" required><br><br>
+        <label for="ffLastName">Last Name:</label>
+        <input type="text" id="ffLastName" name="ffLastName" required><br><br>
+        <label for="ffRank">Rank:</label>
+        <input type="text" id="ffRank" name="ffRank" required><br><br>
+        <label for="ffFireStation">Fire Station:</label>
+        <select id="ffFireStation" name="ffFireStation" required></select><br><br>
+        <label for="ffContact">Contact Information:</label>
+        <input type="text" id="ffContact" name="ffContact" required><br><br>
+        <button type="submit" onclick="addFF()">Save</button>
+    </div>
+    <div id="EQAdd" class="actionForm" style="display:none">
+        <h3 align="left">Create a new equipment below.</h3>
+        <label for="eqType">Type:</label>
+        <input type="text" id="eqType" name="eqType" required><br><br>
+        <label for="eqCondition">Condition:</label>
+        <select id="eqCondition" name="eqCondition" required>
+            <option value="0">New</option>
+            <option value="1">Good</option>
+            <option value="2">Fair</option>
+            <option value="3">Poor</option>
+            <option value="4">Out of Service</option>
+        </select><br><br>
+        <label for="eqFirefighter">Firefighter:</label>
+        <select id="eqFirefighter" name="eqFirefighter" required></select><br><br>
+        <button type="submit" onclick="addEQ()">Save</button>
+    </div>
+    <div id="ECAdd" class="actionForm" style="display:none">
+        <h3 align="left">Create a new emergency call below.</h3>
+        <label for="ecCallerName">Caller Name:</label>
+        <input type="text" id="ecCallerName" name="ecCallerName" required><br><br>
+        <label for="ecCallerPhone">Caller Phone:</label>
+        <input type="text" id="ecCallerPhone" name="ecCallerPhone" required><br><br>
+        <label for="ecIncidentLocation">Incident Location:</label>
+        <input type="text" id="ecIncidentLocation" name="ecIncidentLocation" required><br><br>
+        <label for="ecIncidentType">Incident Type:</label>
+        <select id="ecIncidentType" name="ecIncidentType">
+            <option value="0">Fire</option>
+            <option value="1">Medical Emergency</option>
+            <option value="2">Rescue</option>
+            <option value="3">Hazardous Materials</option>
+            <option value="4">Natural Disaster</option>
+            <option value="5">False Alarm</option>
+            <option value="6">Other></option>
+        </select><br><br>
+        <label for="ecDate">Call Date:</label>
+        <input type="date" id="ecDate" name="ecDate" required><br><br>
+        <label for="ecFireStation">Fire Station:</label>
+        <select id="ecFireStation" name="ecFireStation" required></select><br><br>
+        <button type="submit" onclick="addEC()">Save</button>
+    </div>
+
     <div id="content">
         <div id="MainMenu" style="display:block">
             <h1>Fire Station Management System</h1>
@@ -62,8 +116,12 @@
                         <th>Last Name</th>
                         <th>Rank</th>
                         <th>Contact Information</th>
+                        <th>Fire Station</th>
                         <th>Delete</th>
                         <th>Update</th>
+                        <th>
+                            <button onclick="showAddFF()">Add</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="ffResults">
@@ -82,6 +140,9 @@
                         <th>Firefighter</th>
                         <th>Delete</th>
                         <th>Update</th>
+                        <th>
+                            <button onclick="showAddEQ()">Add</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="eqResults">
@@ -99,8 +160,13 @@
                         <th>Caller Phone</th>
                         <th>Incident Location</th>
                         <th>Incident Type</th>
+                        <th>Call Date</th>
+                        <th>Fire Station</th>
                         <th>Delete</th>
                         <th>Update</th>
+                        <th>
+                            <button onclick="showAddEC()">Add</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="ecResults">
