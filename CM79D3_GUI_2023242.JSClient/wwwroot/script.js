@@ -1,14 +1,4 @@
-﻿let firestations = [];
-let firefighters = [];
-let equipments = [];
-let emergencycalls = [];
-FetchFireStations();
-FetchFireFighters();
-FetchEquipments();
-FetchEmergencyCalls();
-
-let idToUpdate = 0;
-const Condition = {
+﻿const Condition = {
     0: 'New',
     1: 'Good',
     2: 'Fair',
@@ -25,6 +15,94 @@ const IncidentType = {
     5: 'False Alarm',
     6: 'Other'
 }
+let firestations = [];
+let firefighters = [];
+let equipments = [];
+let emergencycalls = [];
+let seasondata = [];
+FetchFireStations();
+FetchFireFighters();
+FetchEquipments();
+FetchEmergencyCalls();
+FetchSeasonData();
+
+setupSignalR();
+
+
+function setupSignalR() {
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:26947/hub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+    //EC
+    connection.on("EmergencyCallCreated", (user, message) => {
+        FetchEmergencyCalls();
+    });
+
+    connection.on("EmergencyCallUpdated", (user, message) => {
+        FetchEmergencyCalls();
+    });
+
+    connection.on("EmergencyCallDeleted", (user, message) => {
+        FetchEmergencyCalls();
+    });
+    //equipment
+    connection.on("EquipmentCreated", (user, message) => {
+        FetchEquipments();
+    });
+
+    connection.on("EquipmentUpdated", (user, message) => {
+        FetchEquipments();
+    });
+
+    connection.on("EquipmentDeleted", (user, message) => {
+        FetchEquipments();
+    });
+    //firestation
+    connection.on("FireStationCreated", (user, message) => {
+        FetchFireStations();
+    });
+
+    connection.on("FireStationUpdated", (user, message) => {
+        FetchFireStations();
+    });
+
+    connection.on("FireStationDeleted", (user, message) => {
+        FetchFireStations();
+    });
+    //firefighter
+    connection.on("FirefighterCreated", (user, message) => {
+        FetchFireFighters();
+    });
+
+    connection.on("FirefighterUpdated", (user, message) => {
+        FetchFireFighters();
+    });
+
+    connection.on("FirefighterDeleted", (user, message) => {
+        FetchFireFighters();
+    });
+
+
+    connection.onclose(async () => {
+        await start();
+    });
+    start();
+
+
+}
+
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+let idToUpdate = 0;
 async function FetchFireStations() {
     await fetch('http://localhost:26947/firestation')
         .then(response => response.json())
@@ -58,6 +136,15 @@ async function FetchEmergencyCalls() {
         .then(data => {
             emergencycalls = data;
             DisplayEmergencyCalls();
+        });
+}
+async function FetchSeasonData() {
+    await fetch('http://localhost:26947/Stat/EmergencyCallsBySeason')
+        .then(response => response.json())
+        .then(data => {
+            seasondata = data;
+            displaySeason();
+            console.log(seasondata);
         });
 }
 
@@ -141,7 +228,11 @@ function showEmergencyCalls() {
     FetchEmergencyCalls();
     document.getElementById('EmergencyCallsTable').style.display = 'block';
 }
-
+function showSeasonChart() {
+    clearResults();
+    FetchSeasonData();
+    document.getElementById('seasonNonCrud').style.display = 'block';
+}
 function showAddFS() {
     document.getElementById('FSUpdate').style.display = 'none';
     document.getElementById('FSAdd').style.display = 'block';
@@ -245,6 +336,8 @@ function clearResults() {
     document.getElementById('FFUpdate').style.display = 'none';
     document.getElementById('EQUpdate').style.display = 'none';
     document.getElementById('ECUpdate').style.display = 'none';
+
+    document.getElementById('seasonNonCrud').style.display = 'none';
 }
 //--------------CRUD METHODS BELOW----------------
 function addFS() {
@@ -636,4 +729,46 @@ function removeEC(id) {
         console.error(error);
         alert(error.message);
     });
+}
+
+function displaySeason() {
+    const seasonsChart = document.getElementById('seasonsChart').getContext('2d');
+
+    // Combine emergency calls data for each season
+    const combinedData = {};
+    seasondata.forEach(item => {
+        if (!combinedData[item.season]) {
+            combinedData[item.season] = [];
+        }
+        combinedData[item.season] = combinedData[item.season].concat(item.emergencyCalls);
+    });
+
+    // Prepare aggregated data for chart
+    const seasonLabels = Object.keys(combinedData);
+    const emergencyCallsData = Object.values(combinedData).map(calls => calls.length);
+
+    var chart = new Chart(seasonsChart, {
+        type: 'bar',
+        data: {
+            labels: seasonLabels,
+            datasets: [{
+                label: 'Emergency Calls',
+                data: emergencyCallsData,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        }
+    });
+    document.getElementById('seasonChart').value = chart;
 }

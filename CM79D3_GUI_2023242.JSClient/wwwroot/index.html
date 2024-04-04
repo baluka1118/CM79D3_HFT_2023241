@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="menu"  align="center">
@@ -12,6 +13,11 @@
         <button class="menuClass" onclick="showFirefighters()">Firefighters</button>
         <button class="menuClass" onclick="showEquipments()">Equipments</button>
         <button class="menuClass" onclick="showEmergencyCalls()">Emergency Calls</button>
+        <button class="menuClass" onclick="showSeasonChart()">Calls by season</button>
+
+    </div>
+    <div id="seasonNonCrud" style="display:none">
+        <canvas id="seasonsChart"></canvas>
     </div>
     <div id="FSAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new fire station below.</h3>
