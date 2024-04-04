@@ -67,7 +67,7 @@ async function DisplayFireStations() {
         document.getElementById('fsResults').innerHTML +=
             '<tr><td>' + firestation.id + '</td><td>' +
             firestation.name + '</td><td>' + firestation.location + '</td><td>' + firestation.contactInformation + '</td><td>' +
-            `<button type="button" onclick="removeFS(${firestation.id})">Delete</button>` + '</td><td>' + `<button type="button" onclick="showUpdateFS(${firestation.id})">Update</button>` + '</td></tr>';
+        `<button class="button-8" type="button" onclick="removeFS(${firestation.id})">Delete</button>` + '</td><td>' + `<button class="button-8" type="button" onclick="showUpdateFS(${firestation.id})">Update</button>` + '</td></tr>';
         console.log(firestation.name);
     });
 }
@@ -78,7 +78,7 @@ async function DisplayFireFighters() {
         document.getElementById('ffResults').innerHTML +=
             '<tr><td>' + firefighter.id + '</td><td>' +
             firefighter.firstName + '</td><td>' + firefighter.lastName + '</td><td>' + firefighter.rank + '</td><td>' + firefighter.contactInformation + '</td><td>' + firefighter.fireStation.name + '</td><td>' +
-            `<button type="button" onclick="removeFF(${firefighter.id})">Delete</button>` + '</td><td>' + `<button type="button" onclick="showUpdateFF(${firefighter.id})">Update</button>` + '</td></tr>';
+        `<button class="button-8" type="button" onclick="removeFF(${firefighter.id})">Delete</button>` + '</td><td>' + `<button class="button-8" type="button" onclick="showUpdateFF(${firefighter.id})">Update</button>` + '</td></tr>';
         console.log(firefighter.firstName);
     });
 }
@@ -92,7 +92,7 @@ async function DisplayEquipments() {
         document.getElementById('eqResults').innerHTML +=
             '<tr><td>' + equipment.id + '</td><td>' +
             equipment.type + '</td><td>' + condition + '</td><td>' + equipment.firefighter.firstName + ' ' + equipment.firefighter.lastName + '</td><td>' +
-            `<button type="button" onclick="removeEQ(${equipment.id})">Delete</button>` + '</td><td>' + `<button type="button" onclick="showUpdateEQ(${equipment.id})">Update</button>` + '</td></tr>';
+        `<button class="button-8" type="button" onclick="removeEQ(${equipment.id})">Delete</button>` + '</td><td>' + `<button class="button-8" type="button" onclick="showUpdateEQ(${equipment.id})">Update</button>` + '</td></tr>';
         console.log(equipment.type);
     });
 }
@@ -109,7 +109,7 @@ async function DisplayEmergencyCalls() {
         document.getElementById('ecResults').innerHTML +=
             '<tr><td>' + emergencycall.id + '</td><td>' +
             emergencycall.callerName + '</td><td>' + phone + '</td><td>' + emergencycall.incidentLocation + '</td><td>' + type + '</td><td>' + emergencycall.dateTime + '</td><td>' + emergencycall.fireStation.name + '</td><td>' +
-            `<button type="button" onclick="removeEC(${emergencycall.id})">Delete</button>` + '</td><td>' + `<button type="button" onclick="showUpdateEC(${emergencycall.id})">Update</button>` + '</td></tr>';
+        `<button type="button" class="button-8" onclick="removeEC(${emergencycall.id})">Delete</button>` + '</td><td>' + `<button class="button-8" type="button" onclick="showUpdateEC(${emergencycall.id})">Update</button>` + '</td></tr>';
         console.log(emergencycall.callerName);
     });
 }
@@ -143,6 +143,7 @@ function showEmergencyCalls() {
 }
 
 function showAddFS() {
+    document.getElementById('FSUpdate').style.display = 'none';
     document.getElementById('FSAdd').style.display = 'block';
 }
 
@@ -151,6 +152,7 @@ function showAddFF() {
     firestations.forEach(firestation => {
         document.getElementById('ffFireStation').innerHTML += '<option value="' + firestation.id + '">' + firestation.name + '</option>';
     });
+    document.getElementById('FFUpdate').style.display = 'none';
     document.getElementById('FFAdd').style.display = 'block';
 }
 function showAddEQ() {
@@ -159,9 +161,11 @@ function showAddEQ() {
         document.getElementById('eqFirefighter').innerHTML += '<option value="' + firefighter.id + '">' + firefighter.firstName + ' ' + firefighter.lastName + '</option>';
         console.log(firefighter.id);
     });
+    document.getElementById('EQUpdate').style.display = 'none';
     document.getElementById('EQAdd').style.display = 'block';
 }
 function showAddEC() {
+    document.getElementById('ECUpdate').style.display = 'none';
     document.getElementById('ECAdd').style.display = 'block';
     firestations.forEach(firestation => {
         document.getElementById('ecFireStation').innerHTML += '<option value="' + firestation.id + '">' + firestation.name + '</option>';
@@ -176,18 +180,51 @@ function showUpdateFS(id) {
     document.getElementById('fsNameU').value = fireStation.name;
     document.getElementById('fsLocationU').value = fireStation.location;
     document.getElementById('fsContactU').value = fireStation.contactInformation;
+    document.getElementById('FSAdd').style.display = 'none';
     document.getElementById('FSUpdate').style.display = 'block';
 }
 function showUpdateFF(id) {
+    firefighter = firefighters.find(f => f.id == id);
     idToUpdate = id;
+    //put the fire stations in the select list
+    firestations.forEach(firestation => {
+        document.getElementById('ffFireStationU').innerHTML += '<option value="' + firestation.id + '">' + firestation.name + '</option>';
+    });
+    document.getElementById('ffFirstNameU').value = firefighter.firstName;
+    document.getElementById('ffLastNameU').value = firefighter.lastName;
+    document.getElementById('ffRankU').value = firefighter.rank;
+    document.getElementById('ffFireStationU').value = firefighter.fireStation_ID;
+    document.getElementById('ffContactU').value = firefighter.contactInformation;
+    document.getElementById('FFAdd').style.display = 'none';
     document.getElementById('FFUpdate').style.display = 'block';
 }
 function showUpdateEQ(id) {
+    equipment = equipments.find(e => e.id == id);
     idToUpdate = id;
+    firefighters.forEach(firefighter => {
+        document.getElementById('eqFirefighterU').innerHTML += '<option value="' + firefighter.id + '">' + firefighter.firstName + ' ' + firefighter.lastName + '</option>';
+        console.log(firefighter.id);
+    });
+    document.getElementById('eqTypeU').value = equipment.type;
+    document.getElementById('eqConditionU').value = equipment.condition;
+    document.getElementById('eqFirefighterU').value = equipment.firefighter_ID;
+    document.getElementById('EQAdd').style.display = 'none';
     document.getElementById('EQUpdate').style.display = 'block';
+
 }
 function showUpdateEC(id) {
+    ec = emergencycalls.find(e => e.id == id);
     idToUpdate = id;
+    firestations.forEach(firestation => {
+        document.getElementById('ecFireStationU').innerHTML += '<option value="' + firestation.id + '">' + firestation.name + '</option>';
+    });
+    document.getElementById('ecCallerNameU').value = ec.callerName;
+    document.getElementById('ecCallerPhoneU').value = ec.callerPhone;
+    document.getElementById('ecIncidentLocationU').value = ec.incidentLocation;
+    document.getElementById('ecIncidentTypeU').value = ec.incidentType;
+    document.getElementById('ecDateU').value = ec.dateTime.toString();
+    document.getElementById('ecFireStationU').value = ec.fireStation_ID;
+    document.getElementById('ECAdd').style.display = 'none';
     document.getElementById('ECUpdate').style.display = 'block';
 }
 
@@ -203,6 +240,11 @@ function clearResults() {
     document.getElementById('FFAdd').style.display = 'none';
     document.getElementById('EQAdd').style.display = 'none';
     document.getElementById('ECAdd').style.display = 'none';
+
+    document.getElementById('FSUpdate').style.display = 'none';
+    document.getElementById('FFUpdate').style.display = 'none';
+    document.getElementById('EQUpdate').style.display = 'none';
+    document.getElementById('ECUpdate').style.display = 'none';
 }
 //--------------CRUD METHODS BELOW----------------
 function addFS() {
@@ -339,7 +381,37 @@ function addFF() {
     document.getElementById('ffContact').value = '';
 }
 function updateFF() {
-
+    var inputFirstName = document.getElementById('ffFirstNameU').value;
+    var inputLastName = document.getElementById('ffLastNameU').value;
+    var inputRank = document.getElementById('ffRankU').value;
+    var inputContact = document.getElementById('ffContactU').value;
+    var inputFireStation = document.getElementById('ffFireStationU').value;
+    fetch('http://localhost:26947/firefighter', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            { id: idToUpdate, firstName: inputFirstName, lastName: inputLastName, rank: inputRank, contactInformation: inputContact, fireStation_ID: inputFireStation }
+        )
+    }).then(response => {
+        if (!response.ok) {
+            return response.json();
+        }
+    }).then(data => {
+        if (data != undefined) {
+            console.log(data);
+            if (data.msg != undefined) {
+                throw new Error(data.msg);
+            }
+            if (data.status != undefined && data.status != 200) {
+                throw new Error(data.title)
+            }
+        }
+        document.getElementById('FFUpdate').style.display = 'none';
+        FetchFireFighters();
+    }).catch(error => {
+        console.error(error);
+        alert(error.message);
+    });
 }
 function removeFF(id) {
     // Send a DELETE request to the server to remove the firefighter with the given id
@@ -370,7 +442,6 @@ function removeFF(id) {
     });
 }
 function addEQ() {
-  //ERRORT DOB
     var inputType = document.getElementById('eqType').value;
     var inputCondition = Number(document.getElementById('eqCondition').value);
     var inputFirefighter = document.getElementById('eqFirefighter').value;
@@ -405,7 +476,36 @@ function addEQ() {
     document.getElementById('eqFirefighter').value = '';
 }
 function updateEQ() {
+    var inputType = document.getElementById('eqTypeU').value;
+    var inputCondition = Number(document.getElementById('eqConditionU').value);
+    var inputFirefighter = document.getElementById('eqFirefighterU').value;
 
+    fetch('http://localhost:26947/equipment', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            { id: idToUpdate, type: inputType, condition: inputCondition, firefighter_ID: inputFirefighter }
+        )
+    }).then(response => {
+        if (!response.ok) {
+            return response.json();
+        }
+    }).then(data => {
+        if (data != undefined) {
+            console.log(data);
+            if (data.msg != undefined) {
+                throw new Error(data.msg);
+            }
+            if (data.status != undefined && data.status != 200) {
+                throw new Error(data.title)
+            }
+        }
+        document.getElementById('EQUpdate').style.display = 'none';
+        FetchEquipments();
+    }).catch(error => {
+        console.error(error);
+        alert(error.message);
+    });
 }
 function removeEQ(id) {
     // Send a DELETE request to the server to remove the equipment with the given id
@@ -476,7 +576,38 @@ function addEC() {
     document.getElementById('ecFireStation').value = '';
 }
 function updateEC() {
-
+    var inputCallerName = document.getElementById('ecCallerNameU').value;
+    var inputCallerPhone = document.getElementById('ecCallerPhoneU').value;
+    var inputIncidentLocation = document.getElementById('ecIncidentLocationU').value;
+    var inputIncidentType = Number(document.getElementById('ecIncidentTypeU').value);
+    var inputDate = document.getElementById('ecDateU').value;
+    var inputFireStation = document.getElementById('ecFireStationU').value;
+    fetch('http://localhost:26947/emergencycall', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            { id: idToUpdate, callerName: inputCallerName, callerPhone: inputCallerPhone, incidentLocation: inputIncidentLocation, incidentType: inputIncidentType, dateTime: inputDate, fireStation_ID: inputFireStation }
+        )
+    }).then(response => {
+        if (!response.ok) {
+            return response.json();
+        }
+    }).then(data => {
+        if (data != undefined) {
+            console.log(data);
+            if (data.msg != undefined) {
+                throw new Error(data.msg);
+            }
+            if (data.status != undefined && data.status != 200) {
+                throw new Error(data.title)
+            }
+        }
+        document.getElementById('ECUpdate').style.display = 'none';
+        FetchEmergencyCalls();
+    }).catch(error => {
+        console.error(error);
+        alert(error.message);
+    });
 }
 function removeEC(id) {
     // Send a DELETE request to the server to remove the emergency call with the given id

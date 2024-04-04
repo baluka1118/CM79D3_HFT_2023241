@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div id="menu" class="menuClass" align="center">
-        <button onclick="showMainMenu()">Main Menu</button>
-        <button onclick="showFireStations()">Fire Stations</button>
-        <button onclick="showFirefighters()">Firefighters</button>
-        <button onclick="showEquipments()">Equipments</button>
-        <button onclick="showEmergencyCalls()">Emergency Calls</button>
+    <div id="menu"  align="center">
+        <button class="menuClass" onclick="showMainMenu()">Main Menu</button>
+        <button class="menuClass" onclick="showFireStations()">Fire Stations</button>
+        <button class="menuClass" onclick="showFirefighters()">Firefighters</button>
+        <button class="menuClass" onclick="showEquipments()">Equipments</button>
+        <button class="menuClass" onclick="showEmergencyCalls()">Emergency Calls</button>
     </div>
     <div id="FSAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new fire station below.</h3>
@@ -23,7 +23,7 @@
 
         <label for="fsContact">Contact Information:</label>
         <input type="text" id="fsContact" name="fsContact" required><br><br>
-        <button type="submit" onclick="addFS()">Save</button>
+        <button class="button-4" type="submit" onclick="addFS()">Save</button>
     </div>
     <div id="FFAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new firefighter below.</h3>
@@ -37,7 +37,7 @@
         <select id="ffFireStation" name="ffFireStation" required></select><br><br>
         <label for="ffContact">Contact Information:</label>
         <input type="text" id="ffContact" name="ffContact" required><br><br>
-        <button type="submit" onclick="addFF()">Save</button>
+        <button class="button-4" type="submit" onclick="addFF()">Save</button>
     </div>
     <div id="EQAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new equipment below.</h3>
@@ -53,7 +53,7 @@
         </select><br><br>
         <label for="eqFirefighter">Firefighter:</label>
         <select id="eqFirefighter" name="eqFirefighter" required></select><br><br>
-        <button type="submit" onclick="addEQ()">Save</button>
+        <button class="button-4" type="submit" onclick="addEQ()">Save</button>
     </div>
     <div id="ECAdd" class="actionForm" style="display:none">
         <h3 align="left">Create a new emergency call below.</h3>
@@ -77,7 +77,7 @@
         <input type="date" id="ecDate" name="ecDate" required><br><br>
         <label for="ecFireStation">Fire Station:</label>
         <select id="ecFireStation" name="ecFireStation" required></select><br><br>
-        <button type="submit" onclick="addEC()">Save</button>
+        <button class="button-4" type="submit" onclick="addEC()">Save</button>
     </div>
 
 
@@ -98,13 +98,13 @@
 
         <label for="fsContactU">Contact Information:</label>
         <input value="" type="text" id="fsContactU" name="fsContactU" required><br><br>
-        <button type="submit" onclick="updateFS()">Save</button>
+        <button class="button-4" type="submit" onclick="updateFS()">Save</button>
     </div>
     <div id="FFUpdate" class="actionForm" style="display:none">
         <h3 align="left">Create a new firefighter below.</h3>
         <label for="ffFirstNameU">First Name:</label>
         <input value="" type="text" id="ffFirstNameU" name="ffFirstNameU" required><br><br>
-        <label for="ffLastName">Last Name:</label>
+        <label for="ffLastNameU">Last Name:</label>
         <input value="" type="text" id="ffLastNameU" name="ffLastNameU" required><br><br>
         <label for="ffRankU">Rank:</label>
         <input value="" type="text" id="ffRankU" name="ffRankU" required><br><br>
@@ -112,7 +112,7 @@
         <select id="ffFireStationU" name="ffFireStationU" required></select><br><br>
         <label for="ffContactU">Contact Information:</label>
         <input value="" type="text" id="ffContactU" name="ffContactU" required><br><br>
-        <button type="submit" onclick="updateFF()">Save</button>
+        <button class="button-4" type="submit" onclick="updateFF()">Save</button>
     </div>
     <div id="EQUpdate" class="actionForm" style="display:none">
         <h3 align="left">Create a new equipment below.</h3>
@@ -128,7 +128,7 @@
         </select><br><br>
         <label for="eqFirefighterU">Firefighter:</label>
         <select id="eqFirefighterU" name="eqFirefighterU" required></select><br><br>
-        <button type="submit" onclick="updateEQ()">Save</button>
+        <button class="button-4" type="submit" onclick="updateEQ()">Save</button>
     </div>
     <div id="ECUpdate" class="actionForm" style="display:none">
         <h3 align="left">Create a new emergency call below.</h3>
@@ -152,7 +152,7 @@
         <input type="date" id="ecDateU" name="ecDateU" required><br><br>
         <label for="ecFireStationU">Fire Station:</label>
         <select id="ecFireStationU" name="ecFireStationU" required></select><br><br>
-        <button type="submit" onclick="updateEC()">Save</button>
+        <button  class="button-4" type="submit" onclick="updateEC()">Save</button>
     </div>
 
 
@@ -181,7 +181,7 @@
                         <th>Delete</th>
                         <th>Update</th>
                         <th>
-                            <button onclick="showAddFS()">Add</button>
+                            <button class="button-8" onclick="showAddFS()">Add</button>
                         </th>
                     </tr>
                 </thead>
@@ -204,7 +204,7 @@
                         <th>Delete</th>
                         <th>Update</th>
                         <th>
-                            <button onclick="showAddFF()">Add</button>
+                            <button class="button-8" onclick="showAddFF()">Add</button>
                         </th>
                     </tr>
                 </thead>
@@ -225,7 +225,7 @@
                         <th>Delete</th>
                         <th>Update</th>
                         <th>
-                            <button onclick="showAddEQ()">Add</button>
+                            <button class="button-8" onclick="showAddEQ()">Add</button>
                         </th>
                     </tr>
                 </thead>
@@ -249,7 +249,7 @@
                         <th>Delete</th>
                         <th>Update</th>
                         <th>
-                            <button onclick="showAddEC()">Add</button>
+                            <button class="button-8" onclick="showAddEC()">Add</button>
                         </th>
                     </tr>
                 </thead>
