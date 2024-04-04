@@ -323,6 +323,7 @@ namespace CM79D3_GUI_2023242.WpfClient
             response.EnsureSuccessStatusCode();
         }
 
+
     }
     public class RestExceptionInfo
     {
@@ -381,9 +382,7 @@ namespace CM79D3_GUI_2023242.WpfClient
                 this.notify = new NotifyService(baseurl + hub);
                 this.notify.AddHandler<T>(endpoint + "Created", (T item) =>
                 {
-                    items.Add(item);
-                    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                    //Init();
+                    Init();
                 });
                 this.notify.AddHandler<T>(endpoint + "Deleted", (T item) =>
                 {
