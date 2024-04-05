@@ -19,6 +19,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     {
         public RestCollection<EmergencyCall> EmergencyCalls { get; set; }
         private IEmergencyCallEditor editor;
+        private EmergencyCall addOrUpdate;
         public EmergencyCallViewModel()
         {
             
@@ -27,17 +28,22 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             {
                 editor = Ioc.Default.GetService<IEmergencyCallEditor>();
             }
+            Messenger.Register<EmergencyCallViewModel,EmergencyCall,string>(this, "EmergencyCallUpdatedOrAdded",
+                (recipient, message) =>
+                {
+                    addOrUpdate = message;
+                });
             AddCommand = new RelayCommand(async () =>
             {
                  var ec = new EmergencyCall();
                  ec.DateTime = DateTime.Now;
-                 if (!editor.Add(ec))
+                 if (!editor.Add(ec,Messenger))
                  {
                      return;
                  }
                  try
                  {
-                    await EmergencyCalls.Add(ec);
+                    await EmergencyCalls.Add(addOrUpdate);
                  }
                  catch (Exception e)
                  {
@@ -46,17 +52,26 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             }, () => true);
             UpdateCommand = new RelayCommand(async () =>
             {
-                if (!editor.Update(SelectedItem))
+                if (!editor.Update(SelectedItem, Messenger))
                 {
                     return;
                 }
+                var oldselected = SelectedItem;
                 try
                 {
+                    SelectedItem.Id = addOrUpdate.Id;
+                    SelectedItem.CallerName = addOrUpdate.CallerName;
+                    SelectedItem.CallerPhone = addOrUpdate.CallerPhone;
+                    SelectedItem.IncidentLocation = addOrUpdate.IncidentLocation;
+                    SelectedItem.IncidentType = addOrUpdate.IncidentType;
+                    SelectedItem.DateTime = addOrUpdate.DateTime;
+                    SelectedItem.FireStation_ID = addOrUpdate.FireStation_ID;
                     await EmergencyCalls.Update(SelectedItem);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    SelectedItem = oldselected;
                 }
             });
             DeleteCommand = new RelayCommand(async () =>

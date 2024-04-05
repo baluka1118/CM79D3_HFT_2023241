@@ -316,7 +316,7 @@ function showUpdateEC(id) {
     document.getElementById('ecCallerPhoneU').value = ec.callerPhone;
     document.getElementById('ecIncidentLocationU').value = ec.incidentLocation;
     document.getElementById('ecIncidentTypeU').value = ec.incidentType;
-    document.getElementById('ecDateU').value = ec.dateTime.toString();
+    document.getElementById('ecDateU').value = ec.dateTime.split('T')[0];
     document.getElementById('ecFireStationU').value = ec.fireStation_ID;
     document.getElementById('ECAdd').style.display = 'none';
     document.getElementById('ECUpdate').style.display = 'block';

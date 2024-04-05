@@ -19,9 +19,15 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
         public RestCollection<FireStation> FireStations { get; set; }
         private IFireStationEditor editor;
+        public FireStation addOrUpdate;
         public FireStationViewModel()
         {
             FireStations = new RestCollection<FireStation>("http://localhost:26947/", "FireStation","hub");
+            Messenger.Register<FireStationViewModel, FireStation, string>(this, "FireStationUpdatedOrAdded",
+                (recipient, message) =>
+                {
+                    addOrUpdate = message;
+                });
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IFireStationEditor>();
@@ -29,13 +35,13 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             AddCommand = new RelayCommand(async () =>
             {
                 var fs = new FireStation();
-                if (!editor.Add(fs))
+                if (!editor.Add(fs,Messenger))
                 {
                     return;
                 }
                 try
                 {
-                    await FireStations.Add(fs);
+                    await FireStations.Add(addOrUpdate);
                 }
                 catch (Exception e)
                 {
@@ -44,18 +50,22 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             });
             UpdateCommand = new RelayCommand(async () =>
             {
-                if (!editor.Update(SelectedItem))
+                if (!editor.Update(SelectedItem,Messenger))
                 {
                     return;
                 }
-
+                var oldselected = SelectedItem;
                 try
                 {
+                    SelectedItem.Name = addOrUpdate.Name;
+                    SelectedItem.Location = addOrUpdate.Location;
+                    SelectedItem.ContactInformation = addOrUpdate.ContactInformation;
                     await FireStations.Update(SelectedItem);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    SelectedItem = oldselected;
                 }
             });
             DeleteCommand = new RelayCommand(async () =>

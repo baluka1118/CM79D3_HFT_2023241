@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CM79D3_GUI_2023242.WpfClient.Views.Popups.ViewModels;
 using CM79D3_HFT_2023241.Models;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
 {
@@ -21,34 +22,12 @@ namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
     /// </summary>
     public partial class FirefighterEditorPopUp : Window
     {
-        public FirefighterEditorPopUp(Firefighter ff)
+        public FirefighterEditorPopUp(Firefighter ff, IMessenger messenger)
         {
             InitializeComponent();
             var viewModel = new FFPopUpViewModel();
             this.DataContext = viewModel;
-            viewModel.Init(ff);
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in grid.Children)
-            {
-                if (item is TextBox tb)
-                {
-                    tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                    continue;
-                }
-                if (item is ComboBox cb)
-                {
-                    if (cb.SelectedItem is FireStation fs)
-                    {
-                        (this.DataContext as FFPopUpViewModel).FF.FireStation_ID = fs.Id;
-                        continue;
-                    }
-                    cb.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
-                }
-            }
-            this.DialogResult = true;
+            viewModel.Init(ff, () => { this.DialogResult = true;},messenger);
         }
     }
 }

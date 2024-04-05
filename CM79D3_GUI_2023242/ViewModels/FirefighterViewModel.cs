@@ -17,9 +17,15 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     {
         public RestCollection<Firefighter> Firefighters { get; set; }
         public IFirefighterEditor editor;
+        private Firefighter addOrUpdate;
         public FirefighterViewModel()
         {
             Firefighters = new RestCollection<Firefighter>("http://localhost:26947/", "Firefighter","hub");
+            Messenger.Register<FirefighterViewModel, Firefighter, string>(this, "FirefighterUpdatedOrAdded",
+                (recipient, message) =>
+                {
+                    addOrUpdate = message;
+                });
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IFirefighterEditor>();
@@ -27,14 +33,14 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             AddCommand = new RelayCommand(async () =>
             {
                 var ff = new Firefighter();
-                bool x = editor.Add(ff);
+                bool x = editor.Add(ff,Messenger);
                 if (!x)
                 {
                     return;
                 }
                 try
                 {
-                    await Firefighters.Add(ff);
+                    await Firefighters.Add(addOrUpdate);
                 }
                 catch (Exception e)
                 {
@@ -43,18 +49,25 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             });
             UpdateCommand = new RelayCommand(async () =>
             {
-                if (!editor.Update(SelectedItem))
+                if (!editor.Update(SelectedItem,Messenger))
                 {
                     return;
                 }
-
+                var oldselected = SelectedItem;
                 try
                 {
+                    SelectedItem.Id = addOrUpdate.Id;
+                    SelectedItem.FirstName = addOrUpdate.FirstName;
+                    SelectedItem.LastName = addOrUpdate.LastName;
+                    SelectedItem.Rank = addOrUpdate.Rank;
+                    SelectedItem.ContactInformation = addOrUpdate.ContactInformation;
+                    SelectedItem.FireStation_ID = addOrUpdate.FireStation_ID;
                     await Firefighters.Update(SelectedItem);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    SelectedItem = oldselected;
                 }
             });
             DeleteCommand = new RelayCommand(async () =>

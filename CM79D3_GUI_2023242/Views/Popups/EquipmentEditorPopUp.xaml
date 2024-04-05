@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CM79D3_GUI_2023242.WpfClient.Views.Popups"
         mc:Ignorable="d"
-        Title="Equipment Editor" Height="250" Width="300" MinHeight="250" MinWidth="300" Loaded="EquipmentEditorPopUp_OnLoaded">
-    <Grid x:Name="grid">
+        Title="Equipment Editor" Height="250" Width="300" MinHeight="250" MinWidth="300">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -19,17 +19,17 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Equipment" FontSize="16"  FontWeight="Bold"/>
         <Label Grid.Row="1" Content="Type" Background="LightCoral"/>
-        <TextBox Grid.Row="2"  Text="{Binding EQ.Type, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="2"  Text="{Binding Type}"/>
         <Label Grid.Row="3" Content="Condition" Background="LightCoral"/>
-        <ComboBox x:Name="cbox" Grid.Row="4" SelectedItem="{Binding EQ.Condition, UpdateSourceTrigger=Explicit}"/>
+        <ComboBox ItemsSource="{Binding Conditions}" Grid.Row="4" SelectedItem="{Binding _Condition}"/>
         <Label Grid.Row="5" Content="Firefighter" Background="LightCoral"/>
-        <ComboBox Grid.Row="6" Height="30"  ItemsSource="{Binding Firefighters}" SelectedItem="{Binding EQ.Firefighter, UpdateSourceTrigger=Explicit}">
+        <ComboBox Grid.Row="6" Height="30"  ItemsSource="{Binding Firefighters}" SelectedItem="{Binding _Firefighter}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding FullName}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Button Grid.Row="7"  Content="Save" Click="ButtonBase_OnClick"/>
+        <Button Grid.Row="7"  Content="Save" Command="{Binding CloseCommand}" />
     </Grid>
 </Window>

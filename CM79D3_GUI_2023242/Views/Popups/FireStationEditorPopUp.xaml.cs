@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CM79D3_HFT_2023241.Models;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
 {
@@ -21,24 +22,12 @@ namespace CM79D3_GUI_2023242.WpfClient.Views.Popups
     /// </summary>
     public partial class FireStationEditorPopUp : Window
     {
-        public FireStationEditorPopUp(FireStation fs)
+        public FireStationEditorPopUp(FireStation fs, IMessenger messenger)
         {
             InitializeComponent();
             var viewModel = new FSPopUpViewModel();
             this.DataContext = viewModel;
-            viewModel.Init(fs);
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in grid.Children)
-            {
-                if (item is TextBox tb)
-                {
-                    tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                }
-            }
-            this.DialogResult = true;
+            viewModel.Init(fs, () => { this.DialogResult = true;},messenger);
         }
     }
 }

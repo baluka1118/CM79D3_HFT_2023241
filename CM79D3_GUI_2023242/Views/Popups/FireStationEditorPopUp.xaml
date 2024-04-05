@@ -23,11 +23,11 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Fire Station" FontSize="16"  FontWeight="Bold"/>
         <Label Grid.Row="1" Content="Name" Background="LightCoral"/>
-        <TextBox Grid.Row="2" Height="30" Text="{Binding FS.Name, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="2" Height="30" Text="{Binding _Name}"/>
         <Label Grid.Row="3" Content="Location" Background="LightCoral"/>
-        <TextBox Grid.Row="4" Height="30" Text="{Binding FS.Location, UpdateSourceTrigger=Explicit}"/>
+        <TextBox Grid.Row="4" Height="30" Text="{Binding _Location}"/>
         <Label Grid.Row="5" Content="Contact Information" Background="LightCoral"/>
-        <TextBox Grid.Row="6" Height="40" Text="{Binding FS.ContactInformation, UpdateSourceTrigger=Explicit}"/>
-        <Button Grid.Row="7" Click="ButtonBase_OnClick" Content="Save"/>
+        <TextBox Grid.Row="6" Height="40" Text="{Binding _ContactInformation}"/>
+        <Button Command="{Binding CloseCommand}" Grid.Row="7"  Content="Save"/>
     </Grid>
 </Window>
