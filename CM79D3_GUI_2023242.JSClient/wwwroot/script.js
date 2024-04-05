@@ -37,14 +37,17 @@ function setupSignalR() {
     //EC
     connection.on("EmergencyCallCreated", (user, message) => {
         FetchEmergencyCalls();
+        FetchSeasonData();
     });
 
     connection.on("EmergencyCallUpdated", (user, message) => {
         FetchEmergencyCalls();
+        FetchSeasonData();
     });
 
     connection.on("EmergencyCallDeleted", (user, message) => {
         FetchEmergencyCalls();
+        FetchSeasonData();
     });
     //equipment
     connection.on("EquipmentCreated", (user, message) => {
@@ -657,6 +660,7 @@ function addEC() {
         }
         document.getElementById('ECAdd').style.display = 'none';
         FetchEmergencyCalls();
+        FetchSeasonData();
     }).catch(error => {
         console.error(error);
         alert(error.message);
@@ -697,6 +701,7 @@ function updateEC() {
         }
         document.getElementById('ECUpdate').style.display = 'none';
         FetchEmergencyCalls();
+        FetchSeasonData();
     }).catch(error => {
         console.error(error);
         alert(error.message);
@@ -714,6 +719,7 @@ function removeEC(id) {
         }
         else {
             FetchEmergencyCalls();
+            FetchSeasonData();
         }
     }).then(data => {
         if (data != undefined) {
@@ -731,8 +737,15 @@ function removeEC(id) {
     });
 }
 
+let seasonsChart = null; // Declare a variable to hold the chart instance
+
 function displaySeason() {
-    const seasonsChart = document.getElementById('seasonsChart').getContext('2d');
+    if (seasonsChart) {
+        seasonsChart.destroy(); // Destroy the previous chart instance if it exists
+    }
+
+    const chartCanvas = document.getElementById('seasonsChart');
+    const chartContext = chartCanvas.getContext('2d');
 
     // Combine emergency calls data for each season
     const combinedData = {};
@@ -747,7 +760,7 @@ function displaySeason() {
     const seasonLabels = Object.keys(combinedData);
     const emergencyCallsData = Object.values(combinedData).map(calls => calls.length);
 
-    var chart = new Chart(seasonsChart, {
+    seasonsChart = new Chart(chartContext, {
         type: 'bar',
         data: {
             labels: seasonLabels,
@@ -770,5 +783,4 @@ function displaySeason() {
             }
         }
     });
-    document.getElementById('seasonChart').value = chart;
 }
