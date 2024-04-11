@@ -19,6 +19,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     {
         public RestCollection<EmergencyCall> EmergencyCalls { get; set; }
         private IEmergencyCallEditor editor;
+        private IErrorHandler errorHandler;
         private EmergencyCall addOrUpdate;
         public EmergencyCallViewModel()
         {
@@ -27,6 +28,10 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IEmergencyCallEditor>();
+            }
+            if (errorHandler == null)
+            {
+                errorHandler = Ioc.Default.GetService<IErrorHandler>();
             }
             Messenger.Register<EmergencyCallViewModel,EmergencyCall,string>(this, "EmergencyCallUpdatedOrAdded",
                 (recipient, message) =>
@@ -47,7 +52,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                  }
                  catch (Exception e)
                  {
-                     MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                  }
             }, () => true);
             UpdateCommand = new RelayCommand(async () =>
@@ -70,7 +75,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                     SelectedItem = oldselected;
                 }
             });
@@ -82,7 +87,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                 }
             });
         }

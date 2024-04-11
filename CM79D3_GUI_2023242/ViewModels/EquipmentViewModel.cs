@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using CM79D3_GUI_2023242.WpfClient.Services;
+using CM79D3_GUI_2023242.WpfClient.Services.Interfaces;
 using CM79D3_GUI_2023242.WpfClient.Views.Popups;
 using CM79D3_HFT_2023241.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,6 +16,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
     class EquipmentViewModel : ObservableRecipient
     {
         public RestCollection<Equipment> Equipments { get; set; }
+        private IErrorHandler errorHandler;
         private IEquipmentEditor editor;
         private Equipment addOrUpdate;
         public EquipmentViewModel()
@@ -23,6 +25,11 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IEquipmentEditor>();
+            }
+
+            if (errorHandler == null)
+            {
+                errorHandler = Ioc.Default.GetService<IErrorHandler>();
             }
             Messenger.Register<EquipmentViewModel, Equipment, string>(this, "EquipmentUpdatedOrAdded",
                 (recipient, message) =>
@@ -42,7 +49,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                 }
             });
             UpdateCommand = new RelayCommand(async () =>
@@ -63,7 +70,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 catch (Exception e)
                 {
                     SelectedItem = oldselected;
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message,"ERROR");
                 }
             });
             DeleteCommand = new RelayCommand(async () =>
@@ -74,7 +81,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message,"ERROR");
                 }
             });
 

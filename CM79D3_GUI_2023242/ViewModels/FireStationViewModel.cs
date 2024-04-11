@@ -19,6 +19,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
 
         public RestCollection<FireStation> FireStations { get; set; }
         private IFireStationEditor editor;
+        private IErrorHandler errorHandler;
         public FireStation addOrUpdate;
         public FireStationViewModel()
         {
@@ -31,6 +32,11 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
             if (editor == null)
             {
                 editor = Ioc.Default.GetService<IFireStationEditor>();
+            }
+
+            if (errorHandler == null)
+            {
+                errorHandler = Ioc.Default.GetService<IErrorHandler>();
             }
             AddCommand = new RelayCommand(async () =>
             {
@@ -45,7 +51,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                 }
             });
             UpdateCommand = new RelayCommand(async () =>
@@ -64,7 +70,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                     SelectedItem = oldselected;
                 }
             });
@@ -76,7 +82,7 @@ namespace CM79D3_GUI_2023242.WpfClient.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    errorHandler.ShowError(e.Message, "ERROR");
                 }
             });
         }

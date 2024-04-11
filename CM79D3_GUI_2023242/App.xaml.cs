@@ -25,6 +25,7 @@ namespace CM79D3_GUI_2023242
                     .AddSingleton<IFireStationEditor, FireStationEditorViaWindow>()
                     .AddSingleton<IEquipmentEditor, EquipmentEditorViaWindow>()
                     .AddSingleton<IFirefighterEditor, FirefighterEditorViaWindow>()
+                    .AddSingleton<IErrorHandler, ErrorHandlerViaMessageBox>()
                     .BuildServiceProvider());
         }
     }
